@@ -1,0 +1,57 @@
+{
+  "name": "httpinvoke",
+  "version": "1.1.5",
+  "main": "httpinvoke-browser.js",
+  "description": "A 5.7kb no-dependencies HTTP client library for browsers and Node.js with a promise-based or Node.js-style callback-based API to progress events, text and binary file upload and download, partial response body, request and response headers, status code.",
+  "location": "https://github.com/jakutis/httpinvoke",
+  "homepage": "https://github.com/jakutis/httpinvoke",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jakutis/httpinvoke"
+  },
+  "private": false,
+  "keywords": [
+    "http",
+    "ajax",
+    "request",
+    "xhr",
+    "connection",
+    "https",
+    "get",
+    "head",
+    "post",
+    "put",
+    "delete",
+    "download",
+    "upload",
+    "browser",
+    "ender",
+    "browserify",
+    "xmlhttprequest",
+    "web"
+  ],
+  "dependencies": {},
+  "devDependencies": {},
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Vytautas Jakutis",
+      "email": "vytautas@jakut.is",
+      "homepage": "https://jakut.is"
+    }
+  ],
+  "ignore": [
+    "node_modules",
+    "bower_components"
+  ],
+  "_release": "1.1.5",
+  "_resolution": {
+    "type": "version",
+    "tag": "1.1.5",
+    "commit": "5585568ec05f2181b30e3f0cd6efc26bd2d89644"
+  },
+  "_source": "git://github.com/jakutis/httpinvoke.git",
+  "_target": "~1.1.5",
+  "_originalSource": "httpinvoke",
+  "_direct": true
+}
