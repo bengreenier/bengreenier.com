@@ -52,6 +52,5 @@
   },
   "_source": "git://github.com/jakutis/httpinvoke.git",
   "_target": "~1.1.5",
-  "_originalSource": "httpinvoke",
-  "_direct": true
+  "_originalSource": "httpinvoke"
 }
