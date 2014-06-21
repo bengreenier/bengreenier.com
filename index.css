@@ -1,116 +1,137 @@
-@font-face {
-    font-family: 'EightBit';
-    src: url('fonts/8-bit_wonder-webfont.eot');
-    src: url('fonts/8-bit_wonder-webfont.eot?#iefix') format('embedded-opentype'),
-         url('fonts/8-bit_wonder-webfont.woff') format('woff'),
-         url('fonts/8-bit_wonder-webfont.ttf') format('truetype'),
-         url('fonts/8-bit_wonder-webfont.svg#8bit_wondernominal') format('svg');
-    font-weight: normal;
-    font-style: normal;
+body {
+  background: #FBB547;
+  color: #FEFCF2;
+  font-size: 100%;
+  font-family: "proxima-nova-1","proxima-nova-2", 'Arial', sans-serif;
+  white-space: nowrap;
 }
 
-@font-face {
-    font-family: 'Raleway';
-    src: url('fonts/raleway_thin-webfont.eot');
-    src: url('fonts/raleway_thin-webfont.eot?#iefix') format('embedded-opentype'),
-         url('fonts/raleway_thin-webfont.woff') format('woff'),
-         url('fonts/raleway_thin-webfont.ttf') format('truetype'),
-         url('fonts/raleway_thin-webfont.svg#raleway_thin') format('svg');
-    font-weight: normal;
-    font-style: normal;
+.download{
+  font: 36px "anchor-web-1","anchor-web-2", 'Arial Narrow' sans-serif;
+  text-align: left;
+  margin-bottom: 0px;}
+
+a{
+  color: #2FBDD0;
+  text-decoration: underline;
+  -webkit-transition: color 0.15s ease-out;
+  -moz-transition: color 0.15s ease-out;
+  }
+  
+a:hover{
+  color: #0BADC4;
 }
 
-body { 
-  margin: 0 0 0 0;
-  background-color: #F1F1F1;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-  font-family: 'EightBit', Arial, 'Liberation Sans';
+  
+.download a{
+  padding: .095em .8em;
+  background: url(../img/arrow.png) no-repeat;
+  background-size:100%;
+  margin-left: .4em;
+  -webkit-transition: margin 0.15s ease-out;
+  -moz-transition: margin 0.15s ease-out;
+  text-decoration: none;}
+
+.download a:hover{
+  color: #FEFCF2;
+  margin-left: .6em;
+  margin-right: -.2em;}
+  
+
+p{  
+  font-size: 1em;
+  margin: 0 0 1.5em 0;}
+
+.container {
+  width: 80%;
+  max-width: 1440px;
+  margin: 0 auto;
+  background-colord: #da4838;}
+
+img{
+  width: 96%;
+  max-width: 96%;
+  margin-bottom: 5%;
+  margin-top: 1%;
+  }
+
+header {
+  margin: 3.5% 0 4%;
 }
 
-a {
-  -webkit-transition-property:color, text;
-  -webkit-transition-duration: 700ms;
-  -webkit-transition-timing-function: ease;
-  -moz-transition-property:color, text;
-  -moz-transition-duration: 700ms;
-  -moz-transition-timing-function: ease;
-  -o-transition-property:color, text;
-  -o-transition-duration: 700ms;
-  -o-transition-timing-function: ease;
-  transition: color,text 700ms ease;
-
-  text-decoration: none;
-  color: inherit;
-}
-a:visited {
-  text-decoration: none;
-  color: inherit;
-}
-a:hover {
-  text-decoration: none;
-  color: #fbb547;
-}
+footer{
+  border-top: .12em solid #FEFCF2;
+  padding-top: 2%;
+  margin-top: 3%;
+  display: block;
+  font-size: .8em;}
 
 h1 {
-  font-size: 120pt;
-  margin: 0 0 0 0;
-  padding: 0px 0px 0px 0px;
-}
-h2 {
-  font-size: 32pt;
-  font-family: 'Raleway', sans-serif;
-  margin: 0 0 0 0;
-  padding: 0px 0px 0px 10px;
-}
-
-
-.name {
+  text-align: center;
+  text-indent: -.12em;
+  color: #FEFCF2;
+  font: 110px "anchor-web-1","anchor-web-2", 'Impact', sans-serif;
+  font-weight: 900;
   display: inline-block;
-  color: #2fbdd0;
-}
-.about {
-  display: inline-block;
-  color: #fbb547;
-}
-
-@font-face {
-  font-family: 'icomoon';
-  src: url('fonts/icomoon.eot');
-}
-@font-face {
-  font-family: 'icomoon';
-  src: url(data:application/x-font-ttf;charset=utf-8;base64,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) format('truetype'),
-     url(data:application/font-woff;charset=utf-8;base64,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) format('woff');
-  font-weight: normal;
-  font-style: normal;
-}
-
-[class^="icon-"], [class*=" icon-"] {
-  font-family: 'icomoon';
-  speak: none;
-  font-style: normal;
-  font-weight: normal;
-  font-variant: normal;
-  text-transform: none;
+  margin: 0 auto;
   line-height: 1;
-
-  /* Better Font Rendering =========== */
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  width: 100%;
+  text-shadow: #EC9B1A .01em .01em 0,
+      #EC9B1A .02em .02em 0,
+      #EC9B1A .03em .03em 0,
+      #EC9B1A .04em .04em 0,
+      #EC9B1A .05em .05em 0,
+      #EC9B1A .06em .06em 0,
+      #EC9B1A .07em .07em 0,      
+      #EC9B1A .08em .08em 0,
+      #EC9B1A .09em .09em 0,
+      #EC9B1A .1em .1em 0;
 }
 
-.icon-twitter-square:before {
-  content: "\f081";
+h1 span.char4 {
+  letter-spacing: .05em;
+  margin-right: -.107em;
 }
-.icon-linkedin-square:before {
-  content: "\f08c";
+
+.char2 {
+  margin-right: .01em;
 }
-.icon-github:before {
-  content: "\f09b";
+
+.char3 {
+  margin-right: -.01em;
 }
-.icon-flickr-square:before {
-  content: "\f16e";
+
+.char6 {
+  margin-right: .035em;
 }
+
+::-moz-selection{ background: rgba(255,255,255, .3); color:#fff;  }
+::selection { background: rgba(255,255,255, .3); color: #fefcf2;  } 
+
+
+
+@media screen and (min-width: 650px) and (max-width:1099px) {
+  p{  
+  font-size: 1.5em;
+  }
+}
+
+
+@media screen and (min-width: 1100px) {
+  p{  
+  font-size: 2em;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  p{  
+  font-size: 2.3em;
+  }
+}
+
+@media screen and (min-width: 1400px) {
+  p{  
+  font-size: 2.75em;
+  }
+}
+

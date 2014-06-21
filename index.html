@@ -1,20 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta charset="utf-8" />
   <title>Ben Greenier</title>
-  <link rel="shortcut icon" type="image/png" href="favicon.png">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" type="text/css" href="index.css">
+  <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;">
+
+  <!-- stylesheets -->
+  <link rel="stylesheet" href="index.css" type="text/css" />
+  
+  <!-- javascripts -->
+  <!--[if IE]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <script type="text/javascript" src="http://use.typekit.com/opn1ucr.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+  <script src="//rawgithub.com/davatron5000/Lettering.js/master/jquery.lettering.js"></script>
+  <script src="//rawgithub.com/davatron5000/FitText.js/master/jquery.fittext.js"></script>
+  <script type="text/javascript">
+  $(document).ready(function() {
+      $("h1").lettering();
+    });
+  </script>
+  
 </head>
+
 <body>
-  <div class="name">
-    <h1>Ben <a href="https://github.com/b3ngr33ni3r" class="icon-github"></a><a href="https://twitter.com/b3ngr33ni3r" class="icon-twitter-square"></a><a href="https://flickr.com/b3ngr33ni3r" class="icon-flickr-square"></a><a href="https://linkedin.com/pub/ben-greenier/5a/2b5/1a7" class="icon-linkedin-square"></a><br/>Greenier</h1>
-  </div>
-  <div class="about">
-    <h2>I build games, backends and other awesome things.</h2>
-  </div>
-  <script src="bower_components/jquery/dist/jquery.min.js"></script>
-  <script src="bower_components/jquery-backstretch/jquery.backstretch.min.js"></script>
-  <script src="index.js"></script>
+
+<div class="container">
+  <header>
+    <h1>Ben Greenier</h1>
+    <p class="download">I make games, backends, and other cool stuff. Sometimes, I even take pictures.</p>
+  </header>
+  <section id="features" class="details">
+    <p>TWITTER, FLICKR, GITHUB, LINKEDIN</p>
+  </section>
+</div>  
+  
+<script type="text/javascript">
+  $("h1").fitText(0.6);
+  $(".download").fitText(2.2);
+</script>
 </body>
 </html>

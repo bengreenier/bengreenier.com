@@ -8,4 +8,5 @@ jQuery(function($){
     }
     $.backstretch(arr, {duration: 3000, fade: 750});
   });
+  $("h1,h2").fitText();
 });
