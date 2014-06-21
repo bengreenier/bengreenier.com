@@ -47,7 +47,6 @@
 .icon-flickr-square:before {
   content: "\f16e";
 }
-
 body {
   background: #FBB547;
   color: #FEFCF2;
@@ -56,14 +55,13 @@ body {
   white-space: nowrap;
 }
 
-.download{
+.aboutMe{
   font: 36px "anchor-web-1","anchor-web-2", 'Arial Narrow' sans-serif;
   text-align: left;
   margin-bottom: 0px;}
 
 a{
   color: #2FBDD0;
-  text-decoration: underline;
   -webkit-transition: color 0.15s ease-out;
   -moz-transition: color 0.15s ease-out;
   }
@@ -73,7 +71,7 @@ a:hover{
 }
 
   
-.download a{
+.aboutMe a{
   padding: .095em .8em;
   background: url(../img/arrow.png) no-repeat;
   background-size:100%;
@@ -82,7 +80,7 @@ a:hover{
   -moz-transition: margin 0.15s ease-out;
   text-decoration: none;}
 
-.download a:hover{
+.aboutMe a:hover{
   color: #FEFCF2;
   margin-left: .6em;
   margin-right: -.2em;}
