@@ -1,13 +1,10 @@
 server {
-  listen      [::]:80;
-  listen      80;
+  listen <%= ENV['PORT'] %>; 
   server_name $NOSSL_SERVER_NAME;
 
   root $DOKKU_ROOT/$APP;
 
   location / {
     index index.$geo.html index.htm index.html;
-	}
-
-  include $DOKKU_ROOT/$APP/nginx.conf.d/*.conf;
+  }
 }
