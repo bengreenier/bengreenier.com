@@ -48,7 +48,7 @@ function handler(eventData) {
     // and the original eq is (((OldValue - OldMin) * (NewMax - NewMin)) / (OldMax - OldMin)) + NewMin
     var normalizedShadowLR = (((tiltLR + 180) * (0.1 - 0.01)) / (180 + 180)) + 0.01;
     var normalizedShadowFB = (((tiltFB + 180) * (0.1 - 0.01)) / (180 + 180)) + 0.01;
-    $("header h1").text(normalizedShadowFB.toPrecision(1)+" "+normalizedShadowLR.toPrecision(1));
+    $("header h1").text(tiltFB.toPrecision(1)+" "+tiltLR.toPrecision(1));
     var normalizedShadowString =  "#EC9B1A "+normalizedShadowLR+"em "+normalizedShadowFB+"em 0," +
                                   "#EC9B1A "+(normalizedShadowLR+0.01)+"em "+(normalizedShadowFB+0.01)+"em 0," +
                                   "#EC9B1A "+(normalizedShadowLR+0.02)+"em "+(normalizedShadowFB+0.02)+"em 0," +
