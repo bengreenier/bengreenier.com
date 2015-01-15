@@ -37,6 +37,24 @@
 <script type="text/javascript">
   $("h1").fitText(0.6);
   $(".aboutMe").fitText(2.2);
+
+if (window.DeviceOrientationEvent) {
+  // Listen for the event and handle DeviceOrientationEvent object
+  window.addEventListener('deviceorientation', function(eventData) {
+    var tiltLR = eventData.gamma;
+    var tiltFB = eventData.beta;
+
+    // The second 180 is actually negative
+    // and the original eq is (((OldValue - OldMin) * (NewMax - NewMin)) / (OldMax - OldMin)) + NewMin
+    var normalizedShadowLR = (((tiltLR + 180) * (24 - 2.4)) / (180 + 180)) + 2.4;
+    var normalizedShadowFB = (((tiltFB + 180) * (24 - 2.4)) / (180 + 180)) + 2.4;
+
+    var normalizedShadowString =  "#EC9B1A "+normalizedShadowLR+"px "+normalizedShadowFB"px 0";
+
+    $("h1").css("textShadow", normalizedShadowString);
+  }, false);
+}
+
 </script>
 </body>
 </html>
