@@ -45,6 +45,8 @@ function handler(eventData) {
 
     if (!tiltFB && !tiltLR && !eventData.first) return;
 
+    //fuck. iphone in landscape flips gamma and beta. should check for that.
+    //also some weird things happen with glitchy math. whatever, it's good enough for now
 
     // The second 180 is actually negative
     // and the original eq is (((OldValue - OldMin) * (NewMax - NewMin)) / (OldMax - OldMin)) + NewMin
