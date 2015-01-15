@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>Ben Greenier</title>
   <link rel="shortcut icon" type="image/png" href="gravatar.png">
-  <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
   <!-- stylesheets -->
   <link rel="stylesheet" href="index.css" type="text/css" />
@@ -42,16 +42,18 @@ function handler(eventData) {
     var tiltLR = eventData.gamma;
     var tiltFB = eventData.beta;
 
+    if (!tiltFB && !tiltLR && !eventData.first) return;
+
     // The second 180 is actually negative
     // and the original eq is (((OldValue - OldMin) * (NewMax - NewMin)) / (OldMax - OldMin)) + NewMin
-    var normalizedShadowLR = (((tiltLR + 180) * (30 - 2.4)) / (180 + 180)) + 2.4;
-    var normalizedShadowFB = (((tiltFB + 180) * (30 - 2.4)) / (180 + 180)) + 2.4;
-
-    var normalizedShadowString =  "#EC9B1A "+normalizedShadowLR+"px "+normalizedShadowFB+"px 0," +
-                                  "#EC9B1A "+(normalizedShadowLR+2)+"px "+(normalizedShadowFB+2)+"px 0," +
-                                  "#EC9B1A "+(normalizedShadowLR+4)+"px "+(normalizedShadowFB+4)+"px 0," +
-                                  "#EC9B1A "+(normalizedShadowLR+6)+"px "+(normalizedShadowFB+6)+"px 0," +
-                                  "#EC9B1A "+(normalizedShadowLR+8)+"px "+(normalizedShadowFB+8)+"px 0";
+    var normalizedShadowLR = (((tiltLR + 180) * (0.1 - 0.01)) / (180 + 180)) + 0.01;
+    var normalizedShadowFB = (((tiltFB + 180) * (0.1 - 0.01)) / (180 + 180)) + 0.01;
+    $("header h1").text(normalizedShadowFB.toPrecision(1)+" "+normalizedShadowLR.toPrecision(1));
+    var normalizedShadowString =  "#EC9B1A "+normalizedShadowLR+"em "+normalizedShadowFB+"em 0," +
+                                  "#EC9B1A "+(normalizedShadowLR+0.01)+"em "+(normalizedShadowFB+0.01)+"em 0," +
+                                  "#EC9B1A "+(normalizedShadowLR+0.02)+"em "+(normalizedShadowFB+0.02)+"em 0," +
+                                  "#EC9B1A "+(normalizedShadowLR+0.03)+"em "+(normalizedShadowFB+0.03)+"em 0.01em," +
+                                  "#EC9B1A "+(normalizedShadowLR+0.04)+"em "+(normalizedShadowFB+0.04)+"em 0.02em";
 
     $("h1").css("textShadow", normalizedShadowString);
   }
@@ -62,7 +64,7 @@ if (window.DeviceOrientationEvent) {
 }
 
 // set initial
-handler({gamma:0,beta:0});
+handler({gamma:0,beta:0, first:true});
 </script>
 </body>
 </html>
