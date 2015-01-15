@@ -38,9 +38,7 @@
   $("h1").fitText(0.6);
   $(".aboutMe").fitText(2.2);
 
-if (window.DeviceOrientationEvent) {
-  // Listen for the event and handle DeviceOrientationEvent object
-  window.addEventListener('deviceorientation', function(eventData) {
+function handler(eventData) {
     var tiltLR = eventData.gamma;
     var tiltFB = eventData.beta;
 
@@ -56,9 +54,15 @@ if (window.DeviceOrientationEvent) {
                                   "#EC9B1A "+(normalizedShadowLR+8)+"px "+(normalizedShadowFB+8)+"px 0";
 
     $("h1").css("textShadow", normalizedShadowString);
-  }, false);
+  }
+
+if (window.DeviceOrientationEvent) {
+  // Listen for the event and handle DeviceOrientationEvent object
+  window.addEventListener('deviceorientation', handler, false);
 }
 
+// set initial
+handler({gamma:0,beta:0});
 </script>
 </body>
 </html>
