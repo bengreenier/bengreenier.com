@@ -46,8 +46,8 @@ function handler(eventData) {
 
     // The second 180 is actually negative
     // and the original eq is (((OldValue - OldMin) * (NewMax - NewMin)) / (OldMax - OldMin)) + NewMin
-    var normalizedShadowLR = (((tiltLR + 180) * (0.2 + 0.2)) / (180 + 180)) + 0.01;
-    var normalizedShadowFB = (((tiltFB + 180) * (0.2 + 0.2)) / (180 + 180)) + 0.01;
+    var normalizedShadowLR = (((tiltLR + 180) * (0.2 + 0.2)) / (180 + 180)) - 0.2;
+    var normalizedShadowFB = (((tiltFB + 180) * (0.2 + 0.2)) / (180 + 180)) - 0.2;
     $("header h1").text(tiltFB+" "+tiltLR);
     var normalizedShadowString =  "#EC9B1A "+normalizedShadowLR+"em "+normalizedShadowFB+"em 0," +
                                   "#EC9B1A "+(normalizedShadowLR+0.01)+"em "+(normalizedShadowFB+0.01)+"em 0," +
