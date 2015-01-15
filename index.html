@@ -45,23 +45,12 @@ function handler(eventData) {
 
     if (!tiltFB && !tiltLR && !eventData.first) return;
 
-    if (Math.abs(Math.abs(ptFB) - Math.abs(tiltFB)) > 10)
-    {
-      tiltFB = ptFB + 2;
-    }
-    if (Math.abs(Math.abs(ptLR) - Math.abs(tiltLR)) > 10)
-    {
-      tiltLR = ptLR + 2;
-    }
-
-    ptLR = tiltLR;
-    ptFB = tiltFB;
 
     // The second 180 is actually negative
     // and the original eq is (((OldValue - OldMin) * (NewMax - NewMin)) / (OldMax - OldMin)) + NewMin
     var normalizedShadowLR = (((tiltLR + 180) * (0.2 + 0.2)) / (180 + 180)) - 0.2;
     var normalizedShadowFB = (((tiltFB + 180) * (0.2 + 0.2)) / (180 + 180)) - 0.2;
-    $("header h1").text(tiltFB+" "+tiltLR);
+    //$("header h1").text(tiltFB+" "+tiltLR);
     var normalizedShadowString =  "#EC9B1A "+normalizedShadowLR+"em "+normalizedShadowFB+"em 0," +
                                   "#EC9B1A "+(normalizedShadowLR+0.01)+"em "+(normalizedShadowFB+0.01)+"em 0," +
                                   "#EC9B1A "+(normalizedShadowLR+0.02)+"em "+(normalizedShadowFB+0.02)+"em 0," +
