@@ -49,7 +49,7 @@ if (window.DeviceOrientationEvent) {
     var normalizedShadowLR = (((tiltLR + 180) * (24 - 2.4)) / (180 + 180)) + 2.4;
     var normalizedShadowFB = (((tiltFB + 180) * (24 - 2.4)) / (180 + 180)) + 2.4;
 
-    var normalizedShadowString =  "#EC9B1A "+normalizedShadowLR+"px "+normalizedShadowFB"px 0";
+    var normalizedShadowString =  "#EC9B1A "+normalizedShadowLR+"px "+normalizedShadowFB+"px 0";
 
     $("h1").css("textShadow", normalizedShadowString);
   }, false);
