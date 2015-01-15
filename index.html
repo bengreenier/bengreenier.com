@@ -48,8 +48,8 @@ if (window.DeviceOrientationEvent) {
     
     // The second 180 is actually negative
     // and the original eq is (((OldValue - OldMin) * (NewMax - NewMin)) / (OldMax - OldMin)) + NewMin
-    var normalizedShadowLR = (((tiltLR + 180) * (24 - 2.4)) / (180 + 180)) + 2.4;
-    var normalizedShadowFB = (((tiltFB + 180) * (24 - 2.4)) / (180 + 180)) + 2.4;
+    var normalizedShadowLR = (((tiltLR + 180) * (30 - 2.4)) / (180 + 180)) + 2.4;
+    var normalizedShadowFB = (((tiltFB + 180) * (30 - 2.4)) / (180 + 180)) + 2.4;
 
     var normalizedShadowString =  "#EC9B1A "+normalizedShadowLR+"px "+normalizedShadowFB+"px 0";
 
