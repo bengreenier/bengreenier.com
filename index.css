@@ -125,16 +125,6 @@ h1 {
   margin: 0 auto;
   line-height: 1;
   width: 100%;
-  text-shadow: #EC9B1A .01em .01em 0,
-      #EC9B1A .02em .02em 0,
-      #EC9B1A .03em .03em 0,
-      #EC9B1A .04em .04em 0,
-      #EC9B1A .05em .05em 0,
-      #EC9B1A .06em .06em 0,
-      #EC9B1A .07em .07em 0,      
-      #EC9B1A .08em .08em 0,
-      #EC9B1A .09em .09em 0,
-      #EC9B1A .1em .1em 0;
 }
 
 h1 span.char4 {

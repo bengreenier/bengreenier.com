@@ -49,11 +49,11 @@ if (window.DeviceOrientationEvent) {
     var normalizedShadowLR = (((tiltLR + 180) * (30 - 2.4)) / (180 + 180)) + 2.4;
     var normalizedShadowFB = (((tiltFB + 180) * (30 - 2.4)) / (180 + 180)) + 2.4;
 
-    var normalizedShadowString =  "#EC9B1A "+normalizedShadowLR+"px "+normalizedShadowFB+"px 0" +
-                                  "#EC9B1A "+(normalizedShadowLR+2)+"px "+(normalizedShadowFB+2)+"px 0" +
-                                  "#EC9B1A "+(normalizedShadowLR+4)+"px "+(normalizedShadowFB+4)+"px 0" +
-                                  "#EC9B1A "+(normalizedShadowLR+6)+"px "+(normalizedShadowFB+6)+"px 0" +
-                                  "#EC9B1A "+(normalizedShadowLR+8)+"px "+(normalizedShadowFB+8)+"px 0" +;
+    var normalizedShadowString =  "#EC9B1A "+normalizedShadowLR+"px "+normalizedShadowFB+"px 0," +
+                                  "#EC9B1A "+(normalizedShadowLR+2)+"px "+(normalizedShadowFB+2)+"px 0," +
+                                  "#EC9B1A "+(normalizedShadowLR+4)+"px "+(normalizedShadowFB+4)+"px 0," +
+                                  "#EC9B1A "+(normalizedShadowLR+6)+"px "+(normalizedShadowFB+6)+"px 0," +
+                                  "#EC9B1A "+(normalizedShadowLR+8)+"px "+(normalizedShadowFB+8)+"px 0";
 
     $("h1").css("textShadow", normalizedShadowString);
   }, false);
