@@ -38,11 +38,24 @@
   $("h1").fitText(0.6);
   $(".aboutMe").fitText(2.2);
 
+var ptLR = 0, ptFB = 0;
 function handler(eventData) {
     var tiltLR = eventData.gamma;
     var tiltFB = eventData.beta;
 
     if (!tiltFB && !tiltLR && !eventData.first) return;
+
+    if (Math.abs(Math.abs(ptFB) - Math.abs(tiltFB)) > 10)
+    {
+      tiltFB = ptFB + 2;
+    }
+    if (Math.abs(Math.abs(ptLR) - Math.abs(tiltLR)) > 10)
+    {
+      tiltLR = ptLR + 2;
+    }
+
+    ptLR = tiltLR;
+    ptFB = tiltFB;
 
     // The second 180 is actually negative
     // and the original eq is (((OldValue - OldMin) * (NewMax - NewMin)) / (OldMax - OldMin)) + NewMin
