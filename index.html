@@ -44,6 +44,8 @@ if (window.DeviceOrientationEvent) {
     var tiltLR = eventData.gamma;
     var tiltFB = eventData.beta;
 
+    console.log(tiltLR+" "+tiltFB);
+    
     // The second 180 is actually negative
     // and the original eq is (((OldValue - OldMin) * (NewMax - NewMin)) / (OldMax - OldMin)) + NewMin
     var normalizedShadowLR = (((tiltLR + 180) * (24 - 2.4)) / (180 + 180)) + 2.4;
