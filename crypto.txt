@@ -1,0 +1,21 @@
+<Excerpt>
+
+That's where the idea of public keys comes in. This is a little hairy, but it's so unbelievably elegant too. 
+
+In public key crypto, each user gets two keys. They're long strings of mathematical gibberish, and they have an almost magic property. Whatever you scramble with one key, the other will unlock, and vice-versa. What's more, they're the *only* keys that can do this -- if you can unscramble a message with one key, you *know* it was scrambled with the other (and vice-versa).
+
+So you take either one of these keys (it doesn't matter which one) and you just *publish* it. You make it a total *non-secret*. You want anyone in the world to know what it is. For obvious reasons, they call this your "public key."
+
+The other key, you hide in the darkest reaches of your mind. You protect it with your life. You never let anyone ever know what it is. That's called your "private key." (Duh.)
+
+Now say you're a spy and you want to talk with your bosses. Their public key is known by everyone. Your public key is known by everyone. No one knows your private key but you. No one knows their private key but them.
+
+You want to send them a message. First, you encrypt it with your private key. You could just send that message along, and it would work pretty well, since they would know when the message arrived that it came from you. How? Because if they can decrypt it with your public key, it can *only* have been encrypted with your private key. This is the equivalent of putting your seal or signature on the bottom of a message. It says, "I wrote this, and no one else. No one could have tampered with it or changed it." 
+
+Unfortunately, this won't actually keep your message a *secret*. That's because your public key is really well known (it has to be, or you'll be limited to sending messages to those few people who have your public key). Anyone who intercepts the message can read it. They can't change it and make it seem like it came from you, but if you don't want people to know what you're saying, you need a better solution.
+
+So instead of just encrypting the message with your private key, you *also* encrypt it with your boss's public key. Now it's been locked twice. The first lock -- the boss's public key -- only comes off when combined with your boss's private key. The second lock -- your private key -- only comes off with your public key. When your bosses receive the message, they unlock it with both keys and now they know for sure that: a) you wrote it and b) only they can read it.
+
+<End>
+
+This excerpt is from the book "little brother" by Cory Doctorow. Check it out at http://craphound.com/littlebrother/download/
