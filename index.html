@@ -3,79 +3,42 @@
 <head>
   <meta charset="utf-8" />
   <title>Ben Greenier</title>
-  <link rel="shortcut icon" type="image/png" href="gravatar.png">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-
-  <!-- stylesheets -->
-  <link rel="stylesheet" href="index.css" type="text/css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Faster+One|Roboto" />
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-  
-  <!-- javascripts -->
-  <!--[if IE]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
-  <script src="bower_components/jquery/dist/jquery.min.js"></script>
-  <script src="bower_components/Lettering.js/jquery.lettering.js"></script>
-  <script src="bower_components/FitText.js/jquery.fittext.js"></script>
-  <script type="text/javascript">
-  $(document).ready(function() {
-      $("h1").lettering();
-    });
-  </script>
-  
+  <style>
+  h1 {
+    font-family: 'Faster One', cursive;
+  }
+  p {
+    font-family: 'Roboto', sans-serif;
+  }
+  a, a:visited, a:hover {
+    text-decoration: none;
+  }
+  </style>
 </head>
 
 <body>
 
 <div class="container">
-  <header>
-    <h1>Ben Greenier</h1>
-    <p class="aboutMe">I make awesome things.</p>
+  <header class="row">
+    <h1><a href="#">Ben Greenier</a></h1>
+    <p>My name is Ben, and I’m a software engineer at Microsoft. I’m obsessed with game development, and game development technologies, though my background is in backend service development. You can find me streaming development on <a href="https://twitch.tv/ben_greenier">Twitch</a>, sharing thoughts on <a href="https://twitter.com/bengreenier">Twitter</a>, and read <a href="https://medium.com/@bengreenier">my medium blog</a> as well.</p> 
+    <p>At work, I tend to focus on creating opensource tools that help make developer’s lives easier. <a href="https://aka.ms/rlc">My team</a> and I do this by partnering with other engineering companies, learning from their problems, and building solutions together. Then my team goes out and shares what we built, how we built it, and what we learned with other cool folks that are interested.</p>
+    <p>Outside of work, I focus on creating games, game frameworks, and streamer tools. This means I’m often creating content for Unity, Unreal, the web, or the desktop. You’ll see a lot of c++, c#, and javascript from me on <a href="https://github.com/bengreenier">GitHub</a>.</p>
   </header>
-  <section id="about" class="details">
-    <div class="icons">
-      <a href="https://twitch.tv/ben_greenier"><i class="fab fa-twitch"></i></a>
-      <a href="https://github.com/bengreenier"><i class="fab fa-github"></i></a>
-      <a href="https://twitter.com/bengreenier"><i class="fab fa-twitter-square"></i></a>
-      <a href="https://flickr.com/b3ngr33ni3r"><i class="fab fa-flickr"></i></a>
-      <a href="https://linkedin.com/pub/ben-greenier/5a/2b5/1a7"><i class="fab fa-linkedin"></i></a>
-    </div>
+  <section class="row">
+    <center>
+      <h1>
+        <a href="https://twitch.tv/ben_greenier"><i class="fab fa-twitch"></i></a>
+        <a href="https://github.com/bengreenier"><i class="fab fa-github"></i></a>
+        <a href="https://twitter.com/bengreenier"><i class="fab fa-twitter-square"></i></a>
+        <a href="https://flickr.com/b3ngr33ni3r"><i class="fab fa-flickr"></i></a>
+        <a href="https://linkedin.com/pub/ben-greenier/5a/2b5/1a7"><i class="fab fa-linkedin"></i></a>
+      </h1>
+    </center>
   </section>
-</div>  
-  
-<script type="text/javascript">
-  $("h1").fitText(0.6);
-  $(".aboutMe").fitText(2.2);
-
-var ptLR = 0, ptFB = 0;
-function handler(eventData) {
-    var tiltLR = eventData.gamma;
-    var tiltFB = eventData.beta;
-
-    if (!tiltFB && !tiltLR && !eventData.first) return;
-
-    //fuck. iphone in landscape flips gamma and beta. should check for that.
-    //also some weird things happen with glitchy math. whatever, it's good enough for now
-
-    // The second 180 is actually negative
-    // and the original eq is (((OldValue - OldMin) * (NewMax - NewMin)) / (OldMax - OldMin)) + NewMin
-    var normalizedShadowLR = (((tiltLR + 180) * (0.2 + 0.2)) / (180 + 180)) - 0.2;
-    var normalizedShadowFB = (((tiltFB + 180) * (0.2 + 0.2)) / (180 + 180)) - 0.2;
-    //$("header h1").text(tiltFB+" "+tiltLR);
-    var normalizedShadowString =  "#EC9B1A "+normalizedShadowLR+"em "+normalizedShadowFB+"em 0," +
-                                  "#EC9B1A "+(normalizedShadowLR+0.01)+"em "+(normalizedShadowFB+0.01)+"em 0," +
-                                  "#EC9B1A "+(normalizedShadowLR+0.02)+"em "+(normalizedShadowFB+0.02)+"em 0," +
-                                  "#EC9B1A "+(normalizedShadowLR+0.03)+"em "+(normalizedShadowFB+0.03)+"em 0.01em," +
-                                  "#EC9B1A "+(normalizedShadowLR+0.04)+"em "+(normalizedShadowFB+0.04)+"em 0.02em";
-
-    $("h1").css("textShadow", normalizedShadowString);
-  }
-
-if (window.DeviceOrientationEvent) {
-  // Listen for the event and handle DeviceOrientationEvent object
-  window.addEventListener('deviceorientation', handler, false);
-}
-
-// set initial
-handler({gamma:0,beta:0, first:true});
-</script>
+</div>
 </body>
 </html>
