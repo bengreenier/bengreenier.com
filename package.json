@@ -1,0 +1,31 @@
+{
+  "name": "bengreenier",
+  "version": "1.0.0",
+  "description": "bengreenier.com site",
+  "browserslist": "> 0.5%, last 2 versions, not dead",
+  "source": "src/index.html",
+  "scripts": {
+    "start": "parcel",
+    "build": "parcel build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ben Greenier",
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "@parcel/packager-raw-url": "^2.0.0-rc.0",
+    "@parcel/transformer-image": "^2.0.0-rc.0",
+    "@parcel/transformer-webmanifest": "^2.0.0-rc.0",
+    "@types/node": "^16.7.2",
+    "@types/react": "^17.0.19",
+    "@types/react-dom": "^17.0.9",
+    "parcel": "^2.0.0-rc.0",
+    "typescript": "^4.3.5"
+  },
+  "dependencies": {
+    "@theme-ui/preset-dark": "^0.11.1",
+    "react": "^17.0.2",
+    "react-anime": "^4.0.4",
+    "react-dom": "^17.0.2",
+    "theme-ui": "^0.11.1"
+  }
+}
