@@ -12,7 +12,7 @@ const greetings = [
   "Nice to see you",
 ];
 
-export default () => {
+export default function Welcome() {
   const greeting = useMemo(() => {
     return greetings[Math.round(Math.random() * (greetings.length - 1))];
   }, []);
@@ -89,4 +89,4 @@ export default () => {
       </Flex>
     </Flex>
   );
-};
+}

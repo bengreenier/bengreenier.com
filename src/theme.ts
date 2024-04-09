@@ -3,4 +3,4 @@ import { Theme, merge } from "theme-ui";
 
 const custom: Theme = {};
 
-export default merge(custom, dark);
+export const customTheme = merge(custom, dark);
