@@ -135,6 +135,8 @@ Buttons cast a soft dark drop shadow and lift up and to the left on hover. Text 
 ### Do:
 - Mark new interactive elements with `data-energy`, and add `data-tint="r,g,b"` when they have a hue.
 - Keep motion inside the shader and the type axes. Respect `prefers-reduced-motion`.
+- Keep the slab fixed: the canvas is sized to `100lvh` and the shader is anchored top-left and scaled by width only, so mobile browser chrome showing or hiding during scroll never moves the stone.
+- Gate hover effects behind `@media (hover: hover) and (pointer: fine)`. Touch gets no hover highlight, and touch pointers do not stir the stone. Keyboard `:focus-visible` keeps the full treatment everywhere.
 - Add projects by editing `src/data/site.ts`.
 
 ### Don't:

@@ -17,6 +17,7 @@ uniform float u_energy;
 uniform vec3 u_tint;
 uniform float u_tintAmt;
 uniform float u_hue;
+uniform float u_unit;
 
 float hash(vec2 p) {
   p = fract(p * vec2(123.34, 456.21));
@@ -48,10 +49,11 @@ float fbm(vec2 p) {
 }
 
 void main() {
-  vec2 frag = gl_FragCoord.xy;
-  float scale = min(u_res.x, u_res.y);
-  vec2 p = frag / scale;
-  vec2 at = u_attract / scale;
+  // Anchor the slab to the top-left and scale it by width only, so a change in
+  // viewport height (mobile browser chrome) can never shift or rescale the stone.
+  vec2 frag = vec2(gl_FragCoord.x, u_res.y - gl_FragCoord.y);
+  vec2 p = frag / u_unit;
+  vec2 at = u_attract / u_unit;
 
   // Local influence of the attractor: a soft pool around the hovered thing.
   float d = distance(p, at);
@@ -101,8 +103,9 @@ void main() {
   col = mix(col, vec3(0.0, 0.03, 0.02), dark * 0.55);
 
   // Gentle vignette keeps type legible toward the edges.
-  vec2 uv = frag / u_res;
-  col *= 0.82 + 0.18 * smoothstep(1.1, 0.2, length(uv - vec2(0.45, 0.55)));
+  // Measured in widths from a fixed point near the top, so it never moves with viewport height.
+  vec2 uv = frag / u_res.x;
+  col *= 0.82 + 0.18 * smoothstep(1.1, 0.2, length(uv - vec2(0.45, 0.5)));
 
   gl_FragColor = vec4(col, 1.0);
 }
@@ -172,16 +175,32 @@ export function startMarble(canvas: HTMLCanvasElement): void {
     tint: gl.getUniformLocation(prog, 'u_tint'),
     tintAmt: gl.getUniformLocation(prog, 'u_tintAmt'),
     hue: gl.getUniformLocation(prog, 'u_hue'),
+    unit: gl.getUniformLocation(prog, 'u_unit'),
   };
 
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
   // The slab is soft, so render below device resolution; the grain still reads.
   let scale = 1;
-  const resize = () => {
+  // Pattern scale in canvas pixels, derived from width alone: about the full width
+  // on phones, easing to width / 1.6 on wide screens so desktop veins stay generous.
+  let unit = 1;
+  let sizedW = 0;
+  let sizedH = 0;
+  // The canvas is sized to the large viewport in CSS, so scrolling never resizes it;
+  // only repaint at a new size when the element's box really changed (rotation, window resize).
+  const resize = (): boolean => {
+    const w = canvas.clientWidth;
+    const h = canvas.clientHeight;
+    if (w === sizedW && h === sizedH) return false;
+    sizedW = w;
+    sizedH = h;
     scale = Math.min(window.devicePixelRatio || 1, 1.5) * 0.75;
-    canvas.width = Math.max(1, Math.round(canvas.clientWidth * scale));
-    canvas.height = Math.max(1, Math.round(canvas.clientHeight * scale));
+    canvas.width = Math.max(1, Math.round(w * scale));
+    canvas.height = Math.max(1, Math.round(h * scale));
+    const wide = Math.min(Math.max((w - 480) / (1000 - 480), 0), 1);
+    unit = canvas.width / (1 + 0.6 * wide);
     gl.viewport(0, 0, canvas.width, canvas.height);
+    return true;
   };
   resize();
 
@@ -197,10 +216,10 @@ export function startMarble(canvas: HTMLCanvasElement): void {
     tintGoal: 0,
   };
 
-  // Map a client-space point into the canvas's flipped-y pixel space.
+  // Map a client-space point into the canvas's top-left-anchored pixel space.
   const toCanvas = (x: number, y: number): [number, number] => {
     const rect = canvas.getBoundingClientRect();
-    return [(x - rect.left) * scale, (rect.height - (y - rect.top)) * scale];
+    return [(x - rect.left) * scale, (y - rect.top) * scale];
   };
 
   const energetic = () => Array.from(document.querySelectorAll<HTMLElement>('[data-energy]'));
@@ -222,6 +241,8 @@ export function startMarble(canvas: HTMLCanvasElement): void {
   };
 
   const onPointer = (e: PointerEvent) => {
+    // Touch has no hover: a finger dragging to scroll shouldn't stir or tint the stone.
+    if (e.pointerType === 'touch') return;
     const { el, dist } = nearest(e.clientX, e.clientY);
     // Within ~200px the slab starts to stir; touching the element is full energy.
     s.target = Math.max(0, 1 - dist / 200);
@@ -243,7 +264,8 @@ export function startMarble(canvas: HTMLCanvasElement): void {
 
   const onFocus = (e: FocusEvent) => {
     const el = (e.target as Element | null)?.closest<HTMLElement>('[data-energy]');
-    if (!el) return;
+    // Only keyboard focus wakes the stone; a tap that focuses a link should not.
+    if (!el || !el.matches(':focus-visible')) return;
     const r = el.getBoundingClientRect();
     s.attractGoal = toCanvas(r.left + Math.min(r.width, 320) / 2, r.top + r.height / 2);
     s.target = 1;
@@ -262,6 +284,7 @@ export function startMarble(canvas: HTMLCanvasElement): void {
 
   const draw = () => {
     gl.uniform2f(u.res, canvas.width, canvas.height);
+    gl.uniform1f(u.unit, unit);
     gl.uniform1f(u.phase, s.phase);
     gl.uniform2f(u.attract, s.attract[0], s.attract[1]);
     gl.uniform1f(u.energy, s.energy);
@@ -308,8 +331,7 @@ export function startMarble(canvas: HTMLCanvasElement): void {
   };
 
   window.addEventListener('resize', () => {
-    resize();
-    draw();
+    if (resize()) draw();
   });
   window.addEventListener('pointermove', onPointer, { passive: true });
   document.addEventListener('pointerleave', onLeave);
