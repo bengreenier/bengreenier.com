@@ -1,0 +1,136 @@
+---
+import Base from '../layouts/Base.astro';
+import Arrow from '../components/Arrow.astro';
+import { links, person } from '../data/site';
+---
+
+<Base current="home">
+  <section class="hero" aria-labelledby="name">
+    <h1 id="name" class="name">
+      <span>Ben</span>
+      <span>Greenier</span>
+    </h1>
+    <div class="bio">
+      <p class="lede">
+        Hi, I’m Ben. I’m a senior software engineer at <strong>Gather</strong>, and off the clock I’m usually knee-deep in a
+        side project.
+      </p>
+      <p>
+        Real-time media in the browser, native bindings in Rust and C++, and the odd mod for whatever city builder has eaten
+        my weekend. TypeScript, C++ and Rust are my happy place.
+      </p>
+    </div>
+    <div class="actions">
+      <a class="pebble cta" href="/projects" data-energy>See what I’m building</a>
+      <ul class="social" aria-label={`${person.name} elsewhere`}>
+        {
+          links.map((link) => (
+            <li>
+              <a class="pebble pebble--quiet" href={link.url} rel="me noopener" data-energy>
+                {link.label}
+                <Arrow />
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero {
+    display: grid;
+    gap: clamp(1.5rem, 4vw, 3rem);
+    padding-top: clamp(2rem, 8vh, 6rem);
+    min-height: calc(100dvh - 5rem);
+    align-content: start;
+  }
+
+  .name {
+    margin: 0;
+    font-size: clamp(4.25rem, 26vw, 17rem);
+    font-weight: 800;
+    font-stretch: 75%;
+    line-height: 0.8;
+    letter-spacing: -0.04em;
+    color: var(--pink);
+    text-shadow: 0 0.04em 0.12em rgb(2 18 11 / 0.6);
+  }
+
+  .name span {
+    display: block;
+  }
+
+  .name span + span {
+    margin-left: clamp(1rem, 9vw, 9rem);
+    color: var(--pink-hot);
+  }
+
+  .bio {
+    max-width: 38ch;
+    font-size: clamp(1.35rem, 2.6vw, 2.15rem);
+    line-height: 1.25;
+    font-weight: 450;
+    text-wrap: pretty;
+    text-shadow: 0 0.05em 0.4em rgb(2 18 11 / 0.8);
+  }
+
+  .bio p {
+    margin: 0 0 0.8em;
+  }
+
+  .bio .lede {
+    font-weight: 600;
+    color: var(--pink-ink);
+  }
+
+  .bio strong {
+    font-weight: 800;
+    color: var(--pink-hot);
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem 1.25rem;
+  }
+
+  .cta {
+    font-size: clamp(1.15rem, 2vw, 1.5rem);
+  }
+
+  .social {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  @media (min-width: 64rem) {
+    .hero {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    }
+
+    .name {
+      grid-column: 1 / -1;
+    }
+
+    .bio {
+      grid-column: 2;
+      grid-row: 2;
+      align-self: start;
+    }
+
+    .actions {
+      grid-column: 1;
+      grid-row: 2;
+      align-self: start;
+      align-items: flex-start;
+      flex-direction: column;
+    }
+  }
+</style>
