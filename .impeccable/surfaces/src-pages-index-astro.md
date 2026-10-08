@@ -17,11 +17,11 @@ User-pinned direction (beats the roll): organic shapes, noise textures (granite-
 
 THESIS: A living slab of marbled stone that wakes up when you get close. It refuses the dev-portfolio default of dark mode, neon accents, mono type, and a grid of repo cards.
 
-OWN-WORLD: A deep green marble ground, domain-warped fbm veins in jade and wine, and a fine granite speckle, all rendered live in WebGL. Type is hot pink (#ffc4ea family) set in Bricolage Grotesque at huge sizes. Links and nav are pebble-shaped pills whose organic radii morph. There are no straight-edged boxes, and the only rules are hand-wavy.
+OWN-WORLD: A deep green marble ground, domain-warped fbm veins in jade with obsidian pockets, and a fine granite speckle, all rendered live in WebGL. Type is safety orange (#ff5f0f) with cream (#ffd2b0) body, set in Bricolage Grotesque at huge sizes; the marble is green with obsidian pockets, no magenta. Links, nav and rows are square slabs; organic form lives only in the stone. (Revised after Ben vetoed pink and roundness.)
 
 STORY: The visitor learns that Ben is a Gather engineer who builds real-time media, native bindings, and game mods. They read the projects, believe the work is real because every one links to code, and click through to a repo or profile.
 
-FIRST VIEWPORT: "Ben Greenier" in pink, about 18vw, across the top left. Under it sits a big first-person bio (about 2.2rem). Pebble links (GitHub, LinkedIn, X) and a "See the projects" pebble sit lower left. The marble fills every pixel behind them. Pointer proximity to any link swirls the veins locally and speeds the flow.
+FIRST VIEWPORT: "Ben Greenier" in cream and safety orange, about 18vw, across the top left. Under it sits a big first-person bio (about 2.2rem). Square button links (GitHub, LinkedIn, X) and a "See the projects" pebble sit lower left. The marble fills every pixel behind them. Pointer proximity to any link swirls the veins locally and speeds the flow.
 
 FORM: The user-pinned marble-and-pebble world, outside the roll's list. Seed key 8c3dd0aa (two degraded re-rolls; the user pinned the direction after them). Signature interaction: an energy field. The shader's warp strength and speed ramp toward the nearest focused or hovered interactive element, then decay back to a calm drift. On /projects, hovering a project tints the nearby veins toward that project's hue.
 

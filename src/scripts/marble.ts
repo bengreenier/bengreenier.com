@@ -71,13 +71,13 @@ void main() {
   );
   float f = fbm(p * 1.4 + warp * r);
 
-  // Ground: mottled emerald with magenta pockets.
-  vec3 deep = vec3(0.010, 0.140, 0.075);
-  vec3 emerald = vec3(0.020, 0.330, 0.175);
-  vec3 wine = vec3(0.330, 0.020, 0.190);
+  // Ground: mottled emerald with obsidian pockets.
+  vec3 deep = vec3(0.008, 0.105, 0.058);
+  vec3 emerald = vec3(0.015, 0.300, 0.160);
+  vec3 obsidian = vec3(0.010, 0.014, 0.013);
   vec3 col = mix(deep, emerald, smoothstep(0.30, 0.80, f));
   col = mix(col, deep * 0.6, smoothstep(0.55, 0.85, r.y) * 0.6);
-  col = mix(col, wine, smoothstep(0.62, 1.0, length(q)) * 0.85);
+  col = mix(col, obsidian, smoothstep(0.58, 0.95, length(q)) * 0.92);
 
   // Marble veins: a broad milky band and a fine sharp seam, both following the
   // warped field, with widths that swell and pinch along their length.

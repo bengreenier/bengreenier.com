@@ -1,18 +1,18 @@
 :root {
-  --ground: #06261a;
-  --ground-deep: #031a11;
-  --pink: #ffc4ea;
-  --pink-hot: #ff8fd6;
-  --pink-ink: #ffe3f5;
+  --ground: #04170f;
+  --ground-deep: #020c08;
+  --accent: #ffd2b0;
+  --accent-hot: #ff5f0f;
+  --accent-ink: #ffe9da;
   --jade: #5fd3a0;
-  --ink-on-pink: #052016;
+  --ink-on-accent: #0a0603;
 
   --font: 'Bricolage Grotesque Variable', 'Bricolage Grotesque', ui-sans-serif, system-ui, sans-serif;
   --gutter: clamp(1rem, 4vw, 3.5rem);
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 
   color-scheme: dark;
-  accent-color: var(--pink-hot);
+  accent-color: var(--accent-hot);
 }
 
 *,
@@ -24,7 +24,7 @@
 html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
-  scrollbar-color: var(--pink) var(--ground-deep);
+  scrollbar-color: var(--accent) var(--ground-deep);
   scrollbar-width: thin;
 }
 
@@ -35,25 +35,25 @@ body {
   font-optical-sizing: auto;
   font-size: 1.125rem;
   line-height: 1.5;
-  color: var(--pink);
-  caret-color: var(--pink-hot);
+  color: var(--accent);
+  caret-color: var(--accent-hot);
   /* Static granite for when WebGL is unavailable; the live slab paints over it. */
   background-color: var(--ground);
   background-image:
-    radial-gradient(120% 90% at 20% 30%, #0b3d26 0%, transparent 60%),
-    radial-gradient(90% 80% at 85% 80%, #3a0a24 0%, transparent 55%),
+    radial-gradient(120% 90% at 20% 30%, #093220 0%, transparent 60%),
+    radial-gradient(90% 80% at 85% 80%, #050807 0%, transparent 55%),
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .7 0 0 0 0 .8 0 0 0 0 .75 0 0 0 .5 -.2'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)'/%3E%3C/svg%3E");
   background-attachment: fixed;
   overflow-x: clip;
 }
 
 ::selection {
-  background: var(--pink-hot);
-  color: var(--ink-on-pink);
+  background: var(--accent-hot);
+  color: var(--ink-on-accent);
 }
 
 :focus-visible {
-  outline: 3px solid var(--pink-hot);
+  outline: 3px solid var(--accent-hot);
   outline-offset: 4px;
 }
 
@@ -83,9 +83,8 @@ a {
   left: var(--gutter);
   top: -4rem;
   padding: 0.5rem 1rem;
-  background: var(--pink);
-  color: var(--ink-on-pink);
-  border-radius: 999px;
+  background: var(--accent);
+  color: var(--ink-on-accent);
   z-index: 10;
 }
 
@@ -109,71 +108,54 @@ main {
   padding: 0 var(--gutter) clamp(3rem, 8vw, 6rem);
 }
 
-/* Pebbles: links shaped like river stones that shift when you reach for them. */
+/* Pebbles: hard-edged slabs cut from the same stone; they shift when you reach for them. */
 .pebble {
-  --r1: 58% 42% 55% 45% / 52% 60% 40% 48%;
-  --r2: 44% 56% 40% 60% / 60% 44% 56% 40%;
   display: inline-flex;
   align-items: center;
   gap: 0.5em;
-  padding: 0.7em 1.35em 0.75em;
-  border-radius: var(--r1);
-  font-weight: 650;
+  padding: 0.75em 1.4em 0.8em;
+  font-weight: 700;
   font-stretch: 90%;
   text-decoration: none;
   line-height: 1;
-  background: var(--pink);
-  color: var(--ink-on-pink);
-  box-shadow:
-    0 0.6em 1.4em -0.6em rgb(0 0 0 / 0.55),
-    inset 0 -0.2em 0.4em rgb(120 20 80 / 0.25),
-    inset 0 0.15em 0.3em rgb(255 255 255 / 0.5);
+  background: var(--accent-hot);
+  color: var(--ink-on-accent);
+  box-shadow: 0 0.7em 1.4em -0.7em rgb(0 0 0 / 0.7);
   transition:
-    border-radius 0.9s var(--ease-out),
     transform 0.5s var(--ease-out),
     background-color 0.3s var(--ease-out),
+    box-shadow 0.5s var(--ease-out),
     font-stretch 0.5s var(--ease-out);
-}
-
-.pebble:nth-child(2n) {
-  --r1: 46% 54% 60% 40% / 45% 52% 48% 55%;
-  --r2: 60% 40% 45% 55% / 55% 45% 60% 40%;
-}
-
-.pebble:nth-child(3n) {
-  --r1: 52% 48% 38% 62% / 58% 40% 60% 42%;
-  --r2: 40% 60% 58% 42% / 42% 58% 40% 60%;
 }
 
 .pebble:hover,
 .pebble:focus-visible {
-  border-radius: var(--r2);
-  transform: translateY(-2px) rotate(-1.5deg);
+  transform: translate(-3px, -3px);
   font-stretch: 100%;
-  background: var(--pink-ink);
+  background: #ff7a33;
+  box-shadow: 0 1.2em 1.8em -0.8em rgb(0 0 0 / 0.8);
 }
 
 .pebble:active {
-  transform: translateY(1px) scale(0.98);
+  transform: translate(0, 0);
 }
 
 .pebble--quiet {
-  background: rgb(3 26 17 / 0.55);
-  color: var(--pink);
-  box-shadow: inset 0 0 0 2px var(--pink);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
+  background: rgb(2 12 8 / 0.6);
+  color: var(--accent);
+  box-shadow: inset 0 0 0 2px var(--accent-hot);
 }
 
 .pebble--quiet:hover,
 .pebble--quiet:focus-visible {
-  background: rgb(3 26 17 / 0.8);
-  color: var(--pink-ink);
+  background: rgb(2 12 8 / 0.85);
+  color: var(--accent-ink);
+  box-shadow: inset 0 0 0 2px var(--accent-hot), 0 1.2em 1.8em -0.8em rgb(0 0 0 / 0.8);
 }
 
 .pebble--quiet[aria-current='page'] {
-  background: var(--pink);
-  color: var(--ink-on-pink);
+  background: var(--accent-hot);
+  color: var(--ink-on-accent);
   box-shadow: none;
 }
 
