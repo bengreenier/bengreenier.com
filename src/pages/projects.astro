@@ -1,0 +1,167 @@
+---
+import Base from '../layouts/Base.astro';
+import Arrow from '../components/Arrow.astro';
+import { links, projects } from '../data/site';
+
+const github = links.find((l) => l.label === 'GitHub');
+---
+
+<Base current="projects" title="Projects" description="Side projects by Ben Greenier: real-time media, Rust, TypeScript and game mods.">
+  <h1 class="title">Things I’ve made</h1>
+  <p class="intro">
+    A handful of side projects I’m proud of. Every one is open source, so feel free to tinker.
+  </p>
+
+  <ol class="index">
+    {
+      projects.map((p) => (
+        <li>
+          <a class="project" href={p.url} data-energy data-tint={p.tint.join(',')} style={`--tint: rgb(${p.tint.map((c) => Math.round(c * 255)).join(' ')})`}>
+            <span class="project-name">
+              {p.name}
+              <Arrow />
+            </span>
+            <span class="project-blurb">{p.blurb}</span>
+            <span class="project-stack">
+              <span class="visually-hidden">Built with </span>
+              {p.stack.join(' · ')}
+            </span>
+          </a>
+        </li>
+      ))
+    }
+  </ol>
+
+  {
+    github && (
+      <p class="more">
+        <a class="pebble" href={github.url} data-energy>
+          Everything else lives on GitHub
+          <Arrow />
+        </a>
+      </p>
+    )
+  }
+</Base>
+
+<style>
+  .title {
+    margin: clamp(2rem, 6vh, 4.5rem) 0 0.4em;
+    font-size: clamp(3rem, 11vw, 9rem);
+    font-weight: 800;
+    font-stretch: 75%;
+    line-height: 0.85;
+    letter-spacing: -0.04em;
+    color: var(--accent-hot);
+    text-shadow: 0 0.04em 0.12em rgb(1 8 5 / 0.6);
+  }
+
+  .intro {
+    max-width: 40ch;
+    margin: 0 0 clamp(2rem, 6vw, 4rem);
+    font-size: clamp(1.2rem, 2vw, 1.6rem);
+    line-height: 1.3;
+    font-weight: 500;
+    text-shadow: 0 0.05em 0.4em rgb(1 8 5 / 0.8);
+  }
+
+  .index {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: clamp(0.5rem, 2vw, 1.25rem);
+  }
+
+  .project {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.35rem 2.5rem;
+    padding: clamp(1rem, 2.5vw, 1.6rem) clamp(1rem, 3vw, 2.25rem);
+    text-decoration: none;
+    color: var(--accent);
+    background: rgb(2 12 8 / 0.35);
+    box-shadow: inset 0 1px 0 rgb(255 95 15 / 0.35);
+    transition:
+      background-color 0.5s var(--ease-out),
+      transform 0.5s var(--ease-out);
+  }
+
+  .project:hover,
+  .project:focus-visible {
+    background: rgb(2 12 8 / 0.78);
+    box-shadow: inset 0 0 0 2px var(--accent-hot);
+    transform: translateX(0.4rem);
+  }
+
+  .project-name {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.25em;
+    font-size: clamp(2.1rem, 6.5vw, 5.25rem);
+    font-weight: 700;
+    font-stretch: 78%;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    color: var(--accent);
+    overflow-wrap: anywhere;
+    transition:
+      font-weight 0.5s var(--ease-out),
+      font-stretch 0.5s var(--ease-out),
+      color 0.3s var(--ease-out);
+  }
+
+  .project-name :global(svg) {
+    width: 0.4em;
+    height: 0.4em;
+    flex: none;
+    opacity: 0.5;
+    transition:
+      opacity 0.3s var(--ease-out),
+      transform 0.5s var(--ease-out);
+  }
+
+  .project:hover .project-name,
+  .project:focus-visible .project-name {
+    font-weight: 800;
+    font-stretch: 100%;
+    color: var(--accent-ink);
+  }
+
+  .project:hover .project-name :global(svg),
+  .project:focus-visible .project-name :global(svg) {
+    opacity: 1;
+    transform: translate(0.08em, -0.08em);
+  }
+
+  .project-blurb {
+    max-width: 62ch;
+    font-size: clamp(1.05rem, 1.4vw, 1.25rem);
+    line-height: 1.45;
+    color: var(--accent-ink);
+    text-wrap: pretty;
+  }
+
+  .project-stack {
+    font-size: 0.95rem;
+    font-weight: 650;
+    letter-spacing: 0.01em;
+    color: var(--tint, var(--jade));
+    filter: brightness(1.35) saturate(0.8);
+  }
+
+  @media (min-width: 64rem) {
+    .project {
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+      align-items: center;
+    }
+
+    .project-name {
+      grid-row: span 2;
+    }
+  }
+
+  .more {
+    margin-top: clamp(2.5rem, 6vw, 4rem);
+  }
+</style>

@@ -1,0 +1,122 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-08T05:23:42.965040Z",
+  "title": "Design System: bengreenier.com",
+  "extensions": {
+    "colorMeta": {
+      "safety-orange": {
+        "role": "primary",
+        "displayName": "Safety Orange"
+      },
+      "cream": {
+        "role": "secondary",
+        "displayName": "Cream"
+      },
+      "ground": {
+        "role": "neutral",
+        "displayName": "Marble Ground"
+      },
+      "tint-typescript": {
+        "role": "accent",
+        "displayName": "TypeScript Vein"
+      },
+      "tint-rust": {
+        "role": "accent",
+        "displayName": "Rust Vein"
+      },
+      "tint-mods": {
+        "role": "accent",
+        "displayName": "Mod Vein"
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "The name on the home page only."
+      },
+      "project-name": {
+        "displayName": "Project name",
+        "purpose": "Index rows; widens on hover/focus."
+      }
+    },
+    "shadows": [
+      {
+        "name": "slab",
+        "value": "0 0.7em 1.4em -0.7em rgb(0 0 0 / 0.7)",
+        "purpose": "Button depth."
+      },
+      {
+        "name": "type-lift",
+        "value": "0 0.05em 0.4em rgb(1 8 5 / 0.8)",
+        "purpose": "Legibility of text over marble."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-out",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "All UI transitions."
+      },
+      {
+        "name": "slab-energy",
+        "value": "rise 6/s, decay 1.4/s; phase speed 0.035 + energy² × 0.45",
+        "purpose": "Marble shader reacting to nearby interaction."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "wide",
+        "value": "64rem"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "pebble-primary",
+      "description": "Main call to action.",
+      "html": "<a class=\"ds-btn\" href=\"#\">See what I’m building</a>",
+      "css": ".ds-btn{display:inline-flex;padding:.75em 1.4em .8em;background:#ff5f0f;color:#0a0603;font-weight:700;font-stretch:90%;text-decoration:none;box-shadow:0 .7em 1.4em -.7em rgb(0 0 0/.7);transition:transform .5s cubic-bezier(.16,1,.3,1)}.ds-btn:hover{transform:translate(-3px,-3px);background:#ff7a33}"
+    },
+    {
+      "name": "Quiet Button",
+      "kind": "nav",
+      "refersTo": "pebble-quiet",
+      "description": "Nav and social links.",
+      "html": "<a class=\"ds-btn-q\" href=\"#\">Projects</a>",
+      "css": ".ds-btn-q{display:inline-flex;padding:.75em 1.4em .8em;background:rgb(2 12 8/.6);color:#ffd2b0;box-shadow:inset 0 0 0 2px #ff5f0f;font-weight:700;text-decoration:none}"
+    }
+  ],
+  "narrative": {
+    "northStar": "Living Marble",
+    "overview": "A slab of green-and-obsidian marble with safety-orange type set on it. The stone drifts calmly and swirls toward whatever you reach for; everything on it is square.",
+    "keyCharacteristics": [
+      "Live WebGL marble with granite speckle",
+      "Huge condensed Bricolage type in safety orange",
+      "Square, hard-edged UI",
+      "Energy that ramps near interaction"
+    ],
+    "rules": [
+      {
+        "name": "The Stone Owns Color",
+        "body": "Color fields come from the marble; UI surfaces are translucent ground.",
+        "section": "colors"
+      },
+      {
+        "name": "Width Is Emphasis",
+        "body": "Condensed at rest, wide on interaction.",
+        "section": "typography"
+      }
+    ],
+    "dos": [
+      "Mark interactive elements with data-energy",
+      "Add projects in src/data/site.ts"
+    ],
+    "donts": [
+      "No pink or magenta",
+      "No rounded corners",
+      "No small text in safety orange"
+    ]
+  }
+}
