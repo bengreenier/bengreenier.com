@@ -78,7 +78,7 @@ export const projects: readonly Project[] = [
   {
     name: 'csii-mods',
     url: 'https://github.com/bengreenier/csii-mods',
-    blurb: 'Mods for Cities Skylines II, starting with BetterAssetMenu.',
+    blurb: 'Mods for Cities: Skylines II, starting with BetterAssetMenu.',
     stack: ['C#', 'TypeScript', 'Game mod'],
     tint: mods,
   },
