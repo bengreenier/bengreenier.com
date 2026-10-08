@@ -16,6 +16,7 @@ uniform vec2 u_attract;
 uniform float u_energy;
 uniform vec3 u_tint;
 uniform float u_tintAmt;
+uniform float u_hue;
 
 float hash(vec2 p) {
   p = fract(p * vec2(123.34, 456.21));
@@ -71,9 +72,9 @@ void main() {
   );
   float f = fbm(p * 1.4 + warp * r);
 
-  // Ground: mottled emerald with obsidian pockets.
-  vec3 deep = vec3(0.008, 0.105, 0.058);
-  vec3 emerald = vec3(0.015, 0.300, 0.160);
+  // Ground: mottled stone with obsidian pockets, easing between emerald and sapphire.
+  vec3 deep = mix(vec3(0.008, 0.105, 0.058), vec3(0.008, 0.050, 0.130), u_hue);
+  vec3 emerald = mix(vec3(0.015, 0.300, 0.160), vec3(0.020, 0.140, 0.380), u_hue);
   vec3 obsidian = vec3(0.010, 0.014, 0.013);
   vec3 col = mix(deep, emerald, smoothstep(0.30, 0.80, f));
   col = mix(col, deep * 0.6, smoothstep(0.55, 0.85, r.y) * 0.6);
@@ -85,8 +86,10 @@ void main() {
   float swell = 0.25 + 0.75 * fbm(p * 3.1 + 4.0 + 0.05 * t);
   float broad = 1.0 - smoothstep(0.0, 0.22 * swell, abs(fract(band) - 0.5));
   float fine = 1.0 - smoothstep(0.0, 0.035 * swell, abs(fract(band * 1.7 + q.y) - 0.5));
-  vec3 milk = mix(vec3(0.16, 0.40, 0.29), u_tint * 0.6, u_tintAmt * (0.3 + pool));
-  vec3 seamCol = mix(vec3(0.30, 0.56, 0.44), u_tint * 0.85, u_tintAmt * (0.35 + pool));
+  vec3 milkBase = mix(vec3(0.16, 0.40, 0.29), vec3(0.17, 0.30, 0.52), u_hue);
+  vec3 milk = mix(milkBase, u_tint * 0.6, u_tintAmt * (0.3 + pool));
+  vec3 seamBase = mix(vec3(0.30, 0.56, 0.44), vec3(0.32, 0.48, 0.72), u_hue);
+  vec3 seamCol = mix(seamBase, u_tint * 0.85, u_tintAmt * (0.35 + pool));
   col = mix(col, milk, broad * 0.5 * (0.6 + 0.4 * swell));
   col = mix(col, seamCol, fine * (0.6 + pool * 0.4) * swell);
 
@@ -105,10 +108,13 @@ void main() {
 }
 `;
 
+const HUE_PERIOD_S = 60;
+
 interface State {
   energy: number;
   target: number;
   phase: number;
+  hueClock: number;
   attract: [number, number];
   attractGoal: [number, number];
   tint: [number, number, number];
@@ -165,6 +171,7 @@ export function startMarble(canvas: HTMLCanvasElement): void {
     energy: gl.getUniformLocation(prog, 'u_energy'),
     tint: gl.getUniformLocation(prog, 'u_tint'),
     tintAmt: gl.getUniformLocation(prog, 'u_tintAmt'),
+    hue: gl.getUniformLocation(prog, 'u_hue'),
   };
 
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -182,6 +189,7 @@ export function startMarble(canvas: HTMLCanvasElement): void {
     energy: 0,
     target: 0,
     phase: Math.random() * 50,
+    hueClock: 0,
     attract: [canvas.width * 0.3, canvas.height * 0.6],
     attractGoal: [canvas.width * 0.3, canvas.height * 0.6],
     tint: [0.4, 0.8, 0.6],
@@ -259,14 +267,19 @@ export function startMarble(canvas: HTMLCanvasElement): void {
     gl.uniform1f(u.energy, s.energy);
     gl.uniform3f(u.tint, s.tint[0], s.tint[1], s.tint[2]);
     gl.uniform1f(u.tintAmt, s.tintAmt);
+    // Green to blue and back, once a minute, on wall-clock time so interaction never rushes it.
+    gl.uniform1f(u.hue, 0.5 - 0.5 * Math.cos((2 * Math.PI * s.hueClock) / HUE_PERIOD_S));
     gl.drawArrays(gl.TRIANGLES, 0, 3);
   };
 
   let last = performance.now();
   let raf = 0;
   const frame = (now: number) => {
-    const dt = Math.min((now - last) / 1000, 0.05);
+    const elapsed = (now - last) / 1000;
     last = now;
+    // Clamp the physics step, but let the hue cycle track real time even on slow devices.
+    const dt = Math.min(elapsed, 0.05);
+    s.hueClock += Math.min(elapsed, 1);
     // Energy rises quickly and settles slowly, so the slab exhales after you leave.
     const rate = s.target > s.energy ? 6 : 1.4;
     s.energy += (s.target - s.energy) * (1 - Math.exp(-rate * dt));

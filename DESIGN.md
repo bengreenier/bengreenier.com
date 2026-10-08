@@ -79,7 +79,7 @@ components:
 
 ## Overview
 
-The site is a slab of green marble with safety-orange type set on it. The stone is live: a WebGL shader (`src/scripts/marble.ts`) paints domain-warped fbm veins, emerald with obsidian pockets, over a granite speckle, and it drifts at a calm pace. When the pointer nears anything interactive (`[data-energy]`), or keyboard focus lands on it, the veins swirl around that spot and the flow speeds up. On `/projects`, the nearby veins also tint toward the project's language hue. Organic form lives only in the stone. Everything set on it is hard-edged.
+The site is a slab of green marble with safety-orange type set on it. The stone is live: a WebGL shader (`src/scripts/marble.ts`) paints domain-warped fbm veins, emerald with obsidian pockets, over a granite speckle, and it drifts at a calm pace. Its hue eases from emerald to sapphire and back once a minute, on wall-clock time, so interaction never rushes it. It holds at emerald under reduced motion. When the pointer nears anything interactive (`[data-energy]`), or keyboard focus lands on it, the veins swirl around that spot and the flow speeds up. On `/projects`, the nearby veins also tint toward the project's language hue. Organic form lives only in the stone. Everything set on it is hard-edged.
 
 ## Colors
 
@@ -98,6 +98,7 @@ The site is a slab of green marble with safety-orange type set on it. The stone 
 ### Named Rules
 - **The Stone Owns Color.** Large color fields come from the marble. UI surfaces are translucent ground (`rgb(2 12 8 / α)`).
 - **No Pink.** Ben vetoed it. The marble has no magenta either.
+- **Green to Blue.** The stone's only color journey is emerald ⇄ sapphire. Orange stays fixed on top.
 
 ## Typography
 
