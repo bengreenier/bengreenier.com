@@ -39,6 +39,7 @@ A working engineer's hacker portfolio. It is not a resume or a marketing page. T
 
 - Name: **Ben Greenier**. Domain: bengreenier.com.
 - Voice: casual, first person, a little playful, and plain-spoken. The old site used lines like "I make awesome things", and that warmth stays.
+- Never use the phrase "knee-deep" (or "knee deep") anywhere. Ben vetoed it.
 - Visual direction requested by Ben: **bold & playful**. Ben has vetoed pink and rounded shapes.
 
 ## Evidence on Hand
