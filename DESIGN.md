@@ -1,17 +1,14 @@
 ---
 name: bengreenier.com
-description: A living slab of marbled stone that wakes up when you get close.
+description: Two greens on paper, stacked like offset sheets that fan out when you reach for them.
 colors:
-  ground: "#04170f"
-  ground-deep: "#020c08"
-  cream: "#ffd2b0"
-  safety-orange: "#ff5f0f"
-  cream-ink: "#ffe9da"
-  ink-on-orange: "#0a0603"
-  jade: "#5fd3a0"
-  tint-typescript: "#6b5cff"
-  tint-rust: "#ff7333"
-  tint-mods: "#9eff4d"
+  paper: "#eef0e8"
+  lime: "#8fd14f"
+  teal: "#3fae7f"
+  teal-blue: "#4a93cf"
+  ink: "#13221a"
+  ink-soft: "#2b3d32"
+  gold: "#a68e45"
 typography:
   display:
     fontFamily: "'Bricolage Grotesque Variable', ui-sans-serif, system-ui, sans-serif"
@@ -79,67 +76,40 @@ components:
 
 ## Overview
 
-The site is a slab of green marble with safety-orange type set on it. The stone is live: a WebGL shader (`src/scripts/marble.ts`) paints domain-warped fbm veins, emerald with obsidian pockets, over a granite speckle, and it drifts at a calm pace. Its hue eases from emerald to sapphire and back once a minute, on wall-clock time, so interaction never rushes it. It holds at emerald under reduced motion. When the pointer nears anything interactive (`[data-energy]`), or keyboard focus lands on it, the veins swirl around that spot and the flow speeds up. On `/projects`, the nearby veins also tint toward the project's language hue. Organic form lives only in the stone. Everything set on it is hard-edged.
+Two flat greens printed on off-white paper, after Ben's reference: a 1960s Japanese "world graphic design exhibition" poster. Every block is a stack of offset sheets in alternating lime and teal. The masthead's stack rises above it, left edges aligned and each strip shorter on the right. The bio panel and project rows fan down and to the left. When a fine pointer comes near a stack, or keyboard focus lands inside it, `src/scripts/sheets.ts` sets `--energy` and the sheets fan further apart, then settle. The teal ink drifts to blue (`#4a93cf`) and back once a minute. A faint paper grain sits over everything.
 
 ## Colors
 
-### Primary
-- **Safety orange** `#ff5f0f`: display emphasis (the surname, page titles, "Gather") and button fills. It is only ever large or bold text, because at small sizes on dark stone it falls under 4.5:1.
-
-### Secondary
-- **Cream** `#ffd2b0`: body copy and the first line of the name, a pale orange tint that keeps body text above 4.5:1. **Cream ink** `#ffe9da` covers the lede and hover states.
-
-### Neutral
-- **Ground** `#04170f` and **ground deep** `#020c08`: the static fallback and the base of the slab. The shader keeps marble luminance low so cream body text stays legible. Only the thin jade veins go brighter.
-
-### Tints
-- Language hues, used only as vein tints and stack labels: TypeScript `#6b5cff`, Rust `#ff7333`, game mods `#9eff4d`.
+- **Paper** `#eef0e8`: the ground.
+- **Lime** `#8fd14f` and **teal** `#3fae7f` (drifting to `#4a93cf`): the two sheet inks, always alternating.
+- **Ink** `#13221a`: all text and primary buttons. It passes 4.5:1 on paper, lime, teal and the blue end of the drift.
+- **Gold** `#a68e45`: only the small foil-stamp square next to the name. Never used for text, because it can't hold contrast on the greens.
 
 ### Named Rules
-- **The Stone Owns Color.** Large color fields come from the marble. UI surfaces are translucent ground (`rgb(2 12 8 / α)`).
-- **No Pink.** Ben vetoed it. The marble has no magenta either.
-- **Green to Blue.** The stone's only color journey is emerald ⇄ sapphire. Orange stays fixed on top.
+- **Alternate the Inks.** Stacked sheets always alternate lime and teal.
+- **No Pink, No Rounding.** Ben vetoed both.
 
 ## Typography
 
-One family, Bricolage Grotesque Variable (self-hosted via Fontsource):
-- Display and titles: weight 800, `font-stretch: 75%`, tracking -0.04em, line-height ≤ 0.85.
-- Project names: weight 700 at 78% width. On hover or focus they widen to 100% and weight 800.
-
-### Named Rules
-- **Width Is Emphasis.** Condensed is the resting state. Widening signals interaction.
-
-## Layout
-
-Generous gutters (`clamp(1rem, 4vw, 3.5rem)`). The home page is a single column on phones and becomes a two-column split at 64rem, with the name spanning both columns. The first viewport always holds the name, the call to action and the social links. Projects form one ordered index separated by 1px orange hairlines.
-
-## Elevation & Depth
-
-Buttons cast a soft dark drop shadow and lift up and to the left on hover. Text over the marble uses a soft dark `text-shadow`. There are no hard offset shadows.
+One family, Bricolage Grotesque Variable: display at weight 800 and 75% width, with tight tracking. Project names go from weight 700 to 800 on a fine-pointer hover or keyboard focus. The width stays fixed, so rows never reflow.
 
 ## Shapes
 
-**Square, always.** `border-radius` is 0 everywhere: buttons, rows, focus rings, the favicon. Ben vetoed roundness. The marble is the only organic form.
+Square, always. The stacks are built from hard-edged `box-shadow` copies (`.sheets` in `global.css`, driven by `--ox`, `--oy`, `--sp` and `--energy`). That's the world's one shape device.
 
 ## Components
 
-### Buttons (slabs)
-- **Primary:** a safety-orange fill with near-black text. On hover or focus it lifts (-3px, -3px), its shadow deepens, and its type widens.
-- **Quiet:** a translucent ground fill with a 2px inset orange ring. Used for nav and social links. `aria-current="page"` fills it orange.
-
-### Project row (signature)
-- A whole-row link to the repo, carrying `data-energy` and `data-tint`. Hover or focus darkens the row, draws a 2px orange frame, nudges it right, widens the name, and tints the stone.
+- **Primary button:** an ink fill with paper text, carrying a two-sheet lime/teal stack that fans on hover or focus.
+- **Quiet button:** paper with a 2px ink ring and a lime sheet. `aria-current="page"` turns it ink.
+- **Project row:** a full sheet stack, alternating lime and teal down the list.
 
 ## Do's and Don'ts
 
 ### Do:
-- Mark new interactive elements with `data-energy`, and add `data-tint="r,g,b"` when they have a hue.
-- Keep motion inside the shader and the type axes. Respect `prefers-reduced-motion`.
-- Keep the slab fixed: the canvas is sized to `100lvh` and the shader is anchored top-left and scaled by width only, so mobile browser chrome showing or hiding during scroll never moves the stone.
-- Gate hover effects behind `@media (hover: hover) and (pointer: fine)`. Touch gets no hover highlight, and touch pointers do not stir the stone. Keyboard `:focus-visible` keeps the full treatment everywhere.
-- Add projects by editing `src/data/site.ts`.
+- Give new blocks `class="sheets"` and `data-stack` so they stack and fan.
+- Gate hover effects behind `(hover: hover) and (pointer: fine)`. Respect `prefers-reduced-motion`, which stops the drift and snaps the stacks instead of animating them.
+- Run all copy through the `no-ai-slop` skill.
 
 ### Don't:
-- Don't use pink or magenta, and don't round any corners.
-- Don't set small text in safety orange. Use cream.
-- Don't add opaque color panels, gradients or neon glows, or kickers above headings.
+- Don't add gradients, glows or rounded corners. The gold square is the only gradient.
+- Don't put gold or teal text on the greens.

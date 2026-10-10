@@ -22,8 +22,8 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
-    <meta name="theme-color" content="#04170f" />
-    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#eef0e8" />
+    <meta name="color-scheme" content="light" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <meta property="og:type" content="website" />
@@ -33,7 +33,6 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <meta name="twitter:card" content="summary" />
   </head>
   <body>
-    <canvas class="slab" aria-hidden="true"></canvas>
     <a class="skip" href="#main">Skip to content</a>
     <header class="top">
       <nav aria-label="Primary">
@@ -60,9 +59,8 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
       <slot />
     </main>
     <script>
-      import { startMarble } from '../scripts/marble';
-      const canvas = document.querySelector<HTMLCanvasElement>('canvas.slab');
-      if (canvas) startMarble(canvas);
+      import { startSheets } from '../scripts/sheets';
+      startSheets();
     </script>
   </body>
 </html>

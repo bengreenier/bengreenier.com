@@ -6,33 +6,38 @@ import { links, person } from '../data/site';
 
 <Base current="home">
   <section class="hero" aria-labelledby="name">
-    <h1 id="name" class="name">
-      <span>Ben</span>
-      <span>Greenier</span>
-    </h1>
-    <div class="bio">
-      <p class="lede">
-        Hi, I’m Ben. I’m a senior software engineer at <strong>Gather</strong>, and I work on side projects in my spare
-        time.
-      </p>
-      <p>
-        Right now I’m having fun creating Cities: Skylines II mods.
-      </p>
+    <div class="sheets sheets--rise masthead" data-stack>
+      <h1 id="name" class="name">
+        <span class="mark" aria-hidden="true"></span>
+        <span>Ben</span>
+        <span>Greenier</span>
+      </h1>
     </div>
-    <div class="actions">
-      <a class="pebble cta" href="/projects" data-energy>See what I’m building</a>
-      <ul class="social" aria-label={`${person.name} elsewhere`}>
-        {
-          links.map((link) => (
-            <li>
-              <a class="pebble pebble--quiet" href={link.url} rel="me noopener" data-energy>
-                {link.label}
-                <Arrow />
-              </a>
-            </li>
-          ))
-        }
-      </ul>
+    <div class="sheets sheets--teal panel" data-stack>
+      <div class="bio">
+        <p class="lede">
+          Hi, I’m Ben. I’m a senior software engineer at <strong>Gather</strong>, and I work on side projects in my spare
+          time.
+        </p>
+        <p>
+          Right now I’m having fun creating Cities: Skylines II mods.
+        </p>
+      </div>
+      <div class="actions">
+        <a class="pebble cta" href="/projects" data-energy>See what I’m building</a>
+        <ul class="social" aria-label={`${person.name} elsewhere`}>
+          {
+            links.map((link) => (
+              <li>
+                <a class="pebble pebble--quiet" href={link.url} rel="me noopener" data-energy>
+                  {link.label}
+                  <Arrow />
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
     </div>
   </section>
 </Base>
@@ -40,60 +45,80 @@ import { links, person } from '../data/site';
 <style>
   .hero {
     display: grid;
-    gap: clamp(1.5rem, 4vw, 3rem);
-    padding-top: clamp(2rem, 8vh, 6rem);
-    min-height: calc(100dvh - 5rem);
-    align-content: start;
+    gap: clamp(2.5rem, 7vw, 5rem);
+    padding-top: calc(6 * 1.9 * var(--hero-step) + 1rem);
+    --hero-step: clamp(6px, 1vw, 12px);
+  }
+
+  .sheets {
+    --step: var(--hero-step);
+  }
+
+  .masthead {
+    padding: clamp(1.25rem, 3vw, 2.5rem) clamp(1.25rem, 3vw, 2.5rem) clamp(1rem, 2.5vw, 2rem);
   }
 
   .name {
     margin: 0;
-    font-size: clamp(4.25rem, 26vw, 17rem);
+    font-size: clamp(3.75rem, 17vw, 12rem);
     font-weight: 800;
     font-stretch: 75%;
-    line-height: 0.8;
+    line-height: 0.82;
     letter-spacing: -0.04em;
-    color: var(--accent);
-    text-shadow: 0 0.04em 0.12em rgb(1 8 5 / 0.6);
+    color: var(--ink);
   }
 
-  .name span {
+  .name span:not(.mark) {
     display: block;
   }
 
-  .name span + span {
-    margin-left: clamp(1rem, 9vw, 9rem);
-    color: var(--accent-hot);
+  /* A small gold square, like the foil stamp on the poster. */
+  .mark {
+    display: block;
+    width: 0.26em;
+    height: 0.26em;
+    margin-bottom: 0.12em;
+    background: linear-gradient(135deg, #cdb874 0%, var(--gold) 45%, #7f6a2c 70%, #c4ad66 100%);
+  }
+
+  .panel {
+    --ox: -0.6;
+    display: grid;
+    gap: clamp(1.5rem, 4vw, 2.5rem);
+    margin-left: calc(6 * 0.6 * 1.9 * var(--hero-step));
+    margin-bottom: calc(6 * 1.9 * var(--hero-step));
+    padding: clamp(1.25rem, 3vw, 2.5rem);
   }
 
   .bio {
-    max-width: 38ch;
-    font-size: clamp(1.35rem, 2.6vw, 2.15rem);
+    max-width: 34ch;
+    font-size: clamp(1.3rem, 2.4vw, 2rem);
     line-height: 1.25;
     font-weight: 450;
     text-wrap: pretty;
-    text-shadow: 0 0.05em 0.4em rgb(1 8 5 / 0.8);
   }
 
   .bio p {
     margin: 0 0 0.8em;
   }
 
+  .bio p:last-child {
+    margin-bottom: 0;
+  }
+
   .bio .lede {
-    font-weight: 600;
-    color: var(--accent-ink);
+    font-weight: 650;
   }
 
   .bio strong {
     font-weight: 800;
-    color: var(--accent-hot);
   }
 
   .actions {
     display: flex;
     flex-wrap: wrap;
-    align-items: center;
-    gap: 1rem 1.25rem;
+    align-items: flex-start;
+    gap: 1.25rem 1.5rem;
   }
 
   .cta {
@@ -103,32 +128,44 @@ import { links, person } from '../data/site';
   .social {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.75rem;
+    gap: 1rem;
     list-style: none;
     margin: 0;
     padding: 0;
   }
 
   @media (min-width: 64rem) {
-    .hero {
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    .masthead {
+      margin-right: 18%;
     }
 
     .name {
-      grid-column: 1 / -1;
+      font-size: clamp(5rem, 9.5vw, 10rem);
     }
 
-    .bio {
-      grid-column: 2;
-      grid-row: 2;
-      align-self: start;
+    .name span:not(.mark) {
+      display: inline;
+    }
+
+    .name span:not(.mark) + span {
+      margin-left: 0.22em;
+    }
+
+    .mark {
+      display: inline-block;
+      vertical-align: 0.55em;
+      margin: 0 0.18em 0 0;
+      width: 0.26em;
+      height: 0.26em;
+    }
+
+    .panel {
+      margin-left: 22%;
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+      align-items: start;
     }
 
     .actions {
-      grid-column: 1;
-      grid-row: 2;
-      align-self: start;
-      align-items: flex-start;
       flex-direction: column;
     }
   }

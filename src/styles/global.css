@@ -1,18 +1,42 @@
+/* Two greens printed on paper, stacked like offset sheets (Ben's reference:
+   a 1960s Japanese exhibition poster). The teal ink drifts to blue and back. */
+@property --teal {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #3fae7f;
+}
+
+@property --energy {
+  syntax: '<number>';
+  inherits: false;
+  initial-value: 0;
+}
+
 :root {
-  --ground: #04170f;
-  --ground-deep: #020c08;
-  --accent: #ffd2b0;
-  --accent-hot: #ff5f0f;
-  --accent-ink: #ffe9da;
-  --jade: #5fd3a0;
-  --ink-on-accent: #0a0603;
+  --paper: #eef0e8;
+  --lime: #8fd14f;
+  --teal: #3fae7f;
+  --ink: #13221a;
+  --ink-soft: #2b3d32;
+  --gold: #a68e45;
 
   --font: 'Bricolage Grotesque Variable', 'Bricolage Grotesque', ui-sans-serif, system-ui, sans-serif;
   --gutter: clamp(1rem, 4vw, 3.5rem);
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 
-  color-scheme: dark;
-  accent-color: var(--accent-hot);
+  color-scheme: light;
+  accent-color: var(--ink);
+  animation: teal-drift 30s ease-in-out infinite alternate;
+}
+
+/* Green to blue and back once a minute. #4a93cf keeps ink text above 4.5:1. */
+@keyframes teal-drift {
+  from {
+    --teal: #3fae7f;
+  }
+  to {
+    --teal: #4a93cf;
+  }
 }
 
 *,
@@ -24,7 +48,7 @@
 html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
-  scrollbar-color: var(--accent) var(--ground-deep);
+  scrollbar-color: var(--ink) var(--paper);
   scrollbar-width: thin;
 }
 
@@ -35,25 +59,31 @@ body {
   font-optical-sizing: auto;
   font-size: 1.125rem;
   line-height: 1.5;
-  color: var(--accent);
-  caret-color: var(--accent-hot);
-  /* Static granite for when WebGL is unavailable; the live slab paints over it. */
-  background-color: var(--ground);
-  background-image:
-    radial-gradient(120% 90% at 20% 30%, #093220 0%, transparent 60%),
-    radial-gradient(90% 80% at 85% 80%, #050807 0%, transparent 55%),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .7 0 0 0 0 .8 0 0 0 0 .75 0 0 0 .5 -.2'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)'/%3E%3C/svg%3E");
-  background-attachment: fixed;
+  color: var(--ink);
+  caret-color: var(--ink);
+  background: var(--paper);
   overflow-x: clip;
 }
 
+/* Paper tooth: a fixed, very faint print grain over everything. */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 20;
+  opacity: 0.22;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .45 0 0 0 0 .47 0 0 0 0 .42 0 0 0 .55 -.15'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
 ::selection {
-  background: var(--accent-hot);
-  color: var(--ink-on-accent);
+  background: var(--lime);
+  color: var(--ink);
 }
 
 :focus-visible {
-  outline: 3px solid var(--accent-hot);
+  outline: 3px solid var(--ink);
   outline-offset: 4px;
 }
 
@@ -63,32 +93,14 @@ a {
   text-underline-offset: 0.18em;
 }
 
-.slab {
-  position: fixed;
-  inset: 0;
-  /* Size to the largest viewport so mobile browser chrome showing or hiding
-     during scroll never resizes the canvas. */
-  width: 100vw;
-  height: 100vh;
-  height: 100lvh;
-  z-index: -1;
-  display: block;
-  opacity: 0;
-  transition: opacity 1.2s var(--ease-out);
-}
-
-.slab[data-ready] {
-  opacity: 1;
-}
-
 .skip {
   position: absolute;
   left: var(--gutter);
   top: -4rem;
   padding: 0.5rem 1rem;
-  background: var(--accent);
-  color: var(--ink-on-accent);
-  z-index: 10;
+  background: var(--ink);
+  color: var(--paper);
+  z-index: 30;
 }
 
 .skip:focus {
@@ -101,7 +113,7 @@ a {
 
 .nav {
   display: flex;
-  gap: 0.75rem;
+  gap: 1rem;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -111,8 +123,43 @@ main {
   padding: 0 var(--gutter) clamp(3rem, 8vw, 6rem);
 }
 
-/* Pebbles: hard-edged slabs cut from the same stone; they shift when you reach for them. */
+/* Sheets: a block with a stepped stack of offset sheets behind it, alternating
+   two inks. Direction comes from --ox/--oy (offset per step) and --sp (spread per
+   step); --energy (0..1, set by sheets.ts) fans the steps apart. */
+.sheets {
+  --step: 12px;
+  --S: calc(var(--step) * (1 + var(--energy) * 0.9));
+  --front: var(--lime);
+  --back: var(--teal);
+  --ox: -1;
+  --oy: 1;
+  --sp: 0;
+  background: var(--front);
+  box-shadow:
+    calc(1 * var(--ox) * var(--S)) calc(1 * var(--oy) * var(--S)) 0 calc(1 * var(--sp) * var(--S)) var(--back),
+    calc(2 * var(--ox) * var(--S)) calc(2 * var(--oy) * var(--S)) 0 calc(2 * var(--sp) * var(--S)) var(--front),
+    calc(3 * var(--ox) * var(--S)) calc(3 * var(--oy) * var(--S)) 0 calc(3 * var(--sp) * var(--S)) var(--back),
+    calc(4 * var(--ox) * var(--S)) calc(4 * var(--oy) * var(--S)) 0 calc(4 * var(--sp) * var(--S)) var(--front),
+    calc(5 * var(--ox) * var(--S)) calc(5 * var(--oy) * var(--S)) 0 calc(5 * var(--sp) * var(--S)) var(--back),
+    calc(6 * var(--ox) * var(--S)) calc(6 * var(--oy) * var(--S)) 0 calc(6 * var(--sp) * var(--S)) var(--front);
+}
+
+/* Strips stacked above, left edges aligned, each one shorter on the right. */
+.sheets--rise {
+  --ox: -1;
+  --oy: -2;
+  --sp: -1;
+}
+
+.sheets--teal {
+  --front: var(--teal);
+  --back: var(--lime);
+}
+
+/* Buttons: ink slabs that carry their own two-sheet stack. */
 .pebble {
+  --step: 4px;
+  --S: calc(var(--step) * (1 + var(--energy) * 1.2));
   display: inline-flex;
   align-items: center;
   gap: 0.5em;
@@ -121,45 +168,43 @@ main {
   font-stretch: 90%;
   text-decoration: none;
   line-height: 1;
-  background: var(--accent-hot);
-  color: var(--ink-on-accent);
-  box-shadow: 0 0.7em 1.4em -0.7em rgb(0 0 0 / 0.7);
+  background: var(--ink);
+  color: var(--paper);
+  box-shadow:
+    var(--S) var(--S) 0 var(--lime),
+    calc(2 * var(--S)) calc(2 * var(--S)) 0 var(--teal);
   transition:
-    transform 0.5s var(--ease-out),
-    background-color 0.3s var(--ease-out),
-    box-shadow 0.5s var(--ease-out),
+    --energy 0.4s var(--ease-out),
     font-stretch 0.5s var(--ease-out);
 }
 
-.pebble:hover,
 .pebble:focus-visible {
-  transform: translate(-3px, -3px);
+  --energy: 1;
   font-stretch: 100%;
-  background: #ff7a33;
-  box-shadow: 0 1.2em 1.8em -0.8em rgb(0 0 0 / 0.8);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .pebble:hover {
+    --energy: 1;
+    font-stretch: 100%;
+  }
 }
 
 .pebble:active {
-  transform: translate(0, 0);
+  --energy: 0;
 }
 
 .pebble--quiet {
-  background: rgb(2 12 8 / 0.6);
-  color: var(--accent);
-  box-shadow: inset 0 0 0 2px var(--accent-hot);
-}
-
-.pebble--quiet:hover,
-.pebble--quiet:focus-visible {
-  background: rgb(2 12 8 / 0.85);
-  color: var(--accent-ink);
-  box-shadow: inset 0 0 0 2px var(--accent-hot), 0 1.2em 1.8em -0.8em rgb(0 0 0 / 0.8);
+  background: var(--paper);
+  color: var(--ink);
+  box-shadow:
+    inset 0 0 0 2px var(--ink),
+    var(--S) var(--S) 0 var(--lime);
 }
 
 .pebble--quiet[aria-current='page'] {
-  background: var(--accent-hot);
-  color: var(--ink-on-accent);
-  box-shadow: none;
+  background: var(--ink);
+  color: var(--paper);
 }
 
 .pebble svg {
@@ -178,6 +223,10 @@ main {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  :root {
+    animation: none;
+  }
+
   *,
   *::before,
   *::after {

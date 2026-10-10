@@ -3,25 +3,32 @@ import Base from '../layouts/Base.astro';
 ---
 
 <Base current="none" title="Not found">
-  <h1 class="lost">Page not found.</h1>
-  <p class="hint">That page doesn’t exist, or it moved in the redesign.</p>
-  <p><a class="pebble" href="/" data-energy>Back to the start</a></p>
+  <div class="sheets sheets--rise lost-block" data-stack>
+    <h1 class="lost">Page not found.</h1>
+    <p class="hint">That page doesn’t exist, or it moved in the redesign.</p>
+    <p><a class="pebble" href="/" data-energy>Back to the start</a></p>
+  </div>
 </Base>
 
 <style>
+  .lost-block {
+    --step: clamp(6px, 1vw, 10px);
+    margin-top: calc(6 * 1.9 * clamp(6px, 1vw, 10px) + 2rem);
+    padding: clamp(1.25rem, 3vw, 2.5rem);
+    max-width: 48rem;
+  }
+
   .lost {
-    margin: clamp(3rem, 12vh, 8rem) 0 0.3em;
-    max-width: 12ch;
-    font-size: clamp(3rem, 10vw, 8rem);
+    margin: 0 0 0.3em;
+    font-size: clamp(3rem, 10vw, 7rem);
     font-weight: 800;
     font-stretch: 75%;
     line-height: 0.85;
     letter-spacing: -0.04em;
-    color: var(--accent-hot);
   }
 
   .hint {
     font-size: clamp(1.2rem, 2vw, 1.6rem);
-    margin: 0 0 2rem;
+    margin: 0 0 1.75rem;
   }
 </style>
