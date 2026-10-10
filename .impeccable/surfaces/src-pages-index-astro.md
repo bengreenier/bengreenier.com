@@ -26,3 +26,7 @@ FIRST VIEWPORT: "Ben Greenier" in cream and safety orange, about 18vw, across th
 FORM: The user-pinned marble-and-pebble world, outside the roll's list. Seed key 8c3dd0aa (two degraded re-rolls; the user pinned the direction after them). Signature interaction: an energy field. The shader's warp strength and speed ramp toward the nearest focused or hovered interactive element, then decay back to a calm drift. On /projects, hovering a project tints the nearby veins toward that project's hue.
 
 FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
+
+## Revision: risograph print (Ben's reference image)
+
+The marble became a live risograph/screenprint print at Ben's request, matched to his reference image. It has a black ground, a torn green field with blue grain, leaning vermilion and cobalt strokes with misregistered edges, black slabs, and glitch tearing that ramps up near interaction. Body copy sits in black knockout blocks, and display type gets a black ink outline. Safety orange became vermilion `#f0533a`, and cream became paper `#f1e7d6`.

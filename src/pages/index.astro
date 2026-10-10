@@ -54,7 +54,8 @@ import { links, person } from '../data/site';
     line-height: 0.8;
     letter-spacing: -0.04em;
     color: var(--accent);
-    text-shadow: 0 0.04em 0.12em rgb(1 8 5 / 0.6);
+    -webkit-text-stroke: var(--ink-outline);
+    paint-order: stroke fill;
   }
 
   .name span {
@@ -72,11 +73,18 @@ import { links, person } from '../data/site';
     line-height: 1.25;
     font-weight: 450;
     text-wrap: pretty;
-    text-shadow: 0 0.05em 0.4em rgb(1 8 5 / 0.8);
+    /* Black knockout block: body copy never sits directly on the inks. */
+    background: var(--ground);
+    padding: clamp(0.9rem, 2.2vw, 1.5rem) clamp(1rem, 2.5vw, 1.75rem);
+    width: fit-content;
   }
 
   .bio p {
     margin: 0 0 0.8em;
+  }
+
+  .bio p:last-child {
+    margin-bottom: 0;
   }
 
   .bio .lede {

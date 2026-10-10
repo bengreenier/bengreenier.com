@@ -18,10 +18,15 @@ import Base from '../layouts/Base.astro';
     line-height: 0.85;
     letter-spacing: -0.04em;
     color: var(--accent-hot);
+    -webkit-text-stroke: var(--ink-outline);
+    paint-order: stroke fill;
   }
 
   .hint {
     font-size: clamp(1.2rem, 2vw, 1.6rem);
     margin: 0 0 2rem;
+    background: var(--ground);
+    padding: 0.9rem 1.1rem;
+    width: fit-content;
   }
 </style>
