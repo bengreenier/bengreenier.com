@@ -1,11 +1,16 @@
 :root {
-  --ground: #04170f;
-  --ground-deep: #020c08;
-  --accent: #ffd2b0;
-  --accent-hot: #ff5f0f;
-  --accent-ink: #ffe9da;
+  /* Risograph inks: black ground, paper for text, vermilion for display and actions. */
+  --ground: #0b0d0b;
+  --ground-deep: #070807;
+  --accent: #f1e7d6;
+  --accent-hot: #f0533a;
+  --accent-ink: #fff6ea;
   --jade: #5fd3a0;
-  --ink-on-accent: #0a0603;
+  --ink-on-accent: #0b0d0b;
+  --ink-green: #3f8a4a;
+  --ink-blue: #2f55e4;
+  /* A black ink outline keeps display type legible over any ink in the print. */
+  --ink-outline: 0.1em var(--ground);
 
   --font: 'Bricolage Grotesque Variable', 'Bricolage Grotesque', ui-sans-serif, system-ui, sans-serif;
   --gutter: clamp(1rem, 4vw, 3.5rem);
@@ -40,8 +45,7 @@ body {
   /* Static granite for when WebGL is unavailable; the live slab paints over it. */
   background-color: var(--ground);
   background-image:
-    radial-gradient(120% 90% at 20% 30%, #093220 0%, transparent 60%),
-    radial-gradient(90% 80% at 85% 80%, #050807 0%, transparent 55%),
+    linear-gradient(97deg, var(--ink-green) 0 34%, transparent 34%),
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .7 0 0 0 0 .8 0 0 0 0 .75 0 0 0 .5 -.2'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)'/%3E%3C/svg%3E");
   background-attachment: fixed;
   overflow-x: clip;
@@ -135,7 +139,7 @@ main {
 .pebble:focus-visible {
   transform: translate(-3px, -3px);
   font-stretch: 100%;
-  background: #ff7a33;
+  background: #ff6a4f;
   box-shadow: 0 1.2em 1.8em -0.8em rgb(0 0 0 / 0.8);
 }
 
@@ -144,14 +148,14 @@ main {
 }
 
 .pebble--quiet {
-  background: rgb(2 12 8 / 0.6);
+  background: rgb(11 13 11 / 0.92);
   color: var(--accent);
   box-shadow: inset 0 0 0 2px var(--accent-hot);
 }
 
 .pebble--quiet:hover,
 .pebble--quiet:focus-visible {
-  background: rgb(2 12 8 / 0.85);
+  background: var(--ground);
   color: var(--accent-ink);
   box-shadow: inset 0 0 0 2px var(--accent-hot), 0 1.2em 1.8em -0.8em rgb(0 0 0 / 0.8);
 }

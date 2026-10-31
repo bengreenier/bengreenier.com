@@ -1,5 +1,6 @@
-// A living marble slab: domain-warped fbm veins over a granite speckle.
-// It drifts calmly, and its warp and speed ramp up around whichever
+// A living risograph print: flat inks (black ground, a torn green field with
+// blue grain, vermilion and cobalt strokes, black slabs) with glitch tearing.
+// It drifts calmly; tearing and stroke drift ramp up around whichever
 // interactive element ([data-energy]) the visitor is near, hovering or focusing.
 
 const VERT = `
@@ -49,63 +50,67 @@ float fbm(vec2 p) {
 }
 
 void main() {
-  // Anchor the slab to the top-left and scale it by width only, so a change in
-  // viewport height (mobile browser chrome) can never shift or rescale the stone.
+  // Anchor to the top-left and scale by width only, so a change in viewport
+  // height (mobile browser chrome) can never shift or rescale the print.
   vec2 frag = vec2(gl_FragCoord.x, u_res.y - gl_FragCoord.y);
   vec2 p = frag / u_unit;
   vec2 at = u_attract / u_unit;
+  float t = u_phase;
 
   // Local influence of the attractor: a soft pool around the hovered thing.
   float d = distance(p, at);
-  float pool = exp(-d * d / 0.09) * u_energy;
+  float pool = exp(-d * d / 0.06) * u_energy;
 
-  // Swirl the domain around the attractor.
-  vec2 rel = p - at;
-  float ang = pool * 1.6;
-  rel = mat2(cos(ang), -sin(ang), sin(ang), cos(ang)) * rel;
-  p = at + rel;
+  // Glitch tearing: thin horizontal bands slip sideways. A few always do;
+  // near an interaction more bands tear, and further.
+  float bandId = floor(p.y * 55.0);
+  float tears = step(0.86 - pool * 0.6, hash(vec2(bandId, 7.0)));
+  float slip = (hash(vec2(bandId, floor(t * 3.0))) - 0.5) * (0.02 + pool * 0.2) * tears;
+  vec2 q = vec2(p.x + slip, p.y);
 
-  float t = u_phase;
-  vec2 q = vec2(fbm(p * 1.4 + vec2(0.0, t)), fbm(p * 1.4 + vec2(5.2, 1.3 - t)));
-  float warp = 2.2 + pool * 2.4;
-  vec2 r = vec2(
-    fbm(p * 1.4 + warp * q + vec2(1.7, 9.2) + 0.15 * t),
-    fbm(p * 1.4 + warp * q + vec2(8.3, 2.8) - 0.12 * t)
-  );
-  float f = fbm(p * 1.4 + warp * r);
+  // Torn edges: noise stretched along x, so edges fray into horizontal teeth.
+  float jag = (noise(vec2(q.x * 7.0, q.y * 80.0)) - 0.5) * 0.12;
 
-  // Ground: mottled stone with obsidian pockets, easing between emerald and sapphire.
-  vec3 deep = mix(vec3(0.008, 0.105, 0.058), vec3(0.008, 0.050, 0.130), u_hue);
-  vec3 emerald = mix(vec3(0.015, 0.300, 0.160), vec3(0.020, 0.140, 0.380), u_hue);
-  vec3 obsidian = vec3(0.010, 0.014, 0.013);
-  vec3 col = mix(deep, emerald, smoothstep(0.30, 0.80, f));
-  col = mix(col, deep * 0.6, smoothstep(0.55, 0.85, r.y) * 0.6);
-  col = mix(col, obsidian, smoothstep(0.58, 0.95, length(q)) * 0.92);
+  // Ink field: one big flat field with torn edges.
+  float field = step(0.43, fbm(vec2(q.x * 1.1, q.y * 0.9) + vec2(3.0, t * 0.04)) + jag);
 
-  // Marble veins: a broad milky band and a fine sharp seam, both following the
-  // warped field, with widths that swell and pinch along their length.
-  float band = f * 7.0 + r.x * 3.0;
-  float swell = 0.25 + 0.75 * fbm(p * 3.1 + 4.0 + 0.05 * t);
-  float broad = 1.0 - smoothstep(0.0, 0.22 * swell, abs(fract(band) - 0.5));
-  float fine = 1.0 - smoothstep(0.0, 0.035 * swell, abs(fract(band * 1.7 + q.y) - 0.5));
-  vec3 milkBase = mix(vec3(0.16, 0.40, 0.29), vec3(0.17, 0.30, 0.52), u_hue);
-  vec3 milk = mix(milkBase, u_tint * 0.6, u_tintAmt * (0.3 + pool));
-  vec3 seamBase = mix(vec3(0.30, 0.56, 0.44), vec3(0.32, 0.48, 0.72), u_hue);
-  vec3 seamCol = mix(seamBase, u_tint * 0.85, u_tintAmt * (0.35 + pool));
-  col = mix(col, milk, broad * 0.5 * (0.6 + 0.4 * swell));
-  col = mix(col, seamCol, fine * (0.6 + pool * 0.4) * swell);
+  // Strokes: tall vertical brush strokes that sway slowly. The second sample is
+  // offset like a misregistered plate, which leaves a dark line on one edge.
+  float sway = 0.6 * fbm(vec2(q.y * 0.8, t * 0.05));
+  // A slight lean, like the diagonal strokes in a screenprint.
+  vec2 sp = vec2(q.x * 8.0 + q.y * 1.4 + sway, q.y * 0.4 - t * 0.03);
+  float rough = (noise(vec2(q.x * 60.0, q.y * 10.0)) - 0.5) * 0.06;
+  float cut = 0.6 - pool * 0.06;
+  float stroke = step(cut, fbm(sp + vec2(11.0, 0.0)) + rough);
+  float strokeOff = step(cut, fbm(sp + vec2(11.1, 0.012)) + rough);
+  float which = step(0.5, noise(vec2(q.x * 4.0 + q.y * 0.7 + sway, 4.0)));
 
-  // Granite: fine grain plus irregular light and dark flecks, fixed to the slab.
-  col += (hash(frag) - 0.5) * 0.03;
-  float light = smoothstep(0.80, 0.86, noise(frag * 0.55 + 31.0)) * step(0.5, hash(floor(frag * 0.2)));
-  float dark = smoothstep(0.78, 0.84, noise(frag * 0.45 + 7.0));
-  col = mix(col, vec3(0.62, 0.72, 0.66), light * 0.4);
-  col = mix(col, vec3(0.0, 0.03, 0.02), dark * 0.55);
+  // Black slabs: diagonal shapes cutting across everything.
+  vec2 rp = mat2(0.8, -0.6, 0.6, 0.8) * q;
+  float slab = step(0.7, fbm(vec2(rp.x * 2.4, rp.y * 0.6) + vec2(40.0, -t * 0.02)) + jag * 0.5);
 
-  // Gentle vignette keeps type legible toward the edges.
-  // Measured in widths from a fixed point near the top, so it never moves with viewport height.
-  vec2 uv = frag / u_res.x;
-  col *= 0.82 + 0.18 * smoothstep(1.1, 0.2, length(uv - vec2(0.45, 0.5)));
+  vec3 black = vec3(0.043, 0.051, 0.043);
+  vec3 green = vec3(0.247, 0.541, 0.290);
+  vec3 blue = vec3(0.184, 0.333, 0.894);
+  vec3 red = vec3(0.941, 0.325, 0.227);
+  // The green/blue cycle swaps the two inks between the field and the strokes.
+  vec3 fieldInk = mix(green, blue, u_hue);
+  vec3 altInk = mix(blue, green, u_hue);
+
+  // Riso grain: the field is speckled with the other ink, denser in vertical bands.
+  float density = 0.12 + 0.3 * noise(vec2(q.x * 14.0, q.y * 2.0));
+  float speck = step(1.0 - density * 0.5, hash(floor(frag)));
+  vec3 col = mix(black, mix(fieldInk, altInk, speck), field);
+
+  vec3 strokeInk = mix(red, altInk, which);
+  strokeInk = mix(strokeInk, u_tint, u_tintAmt * min(pool * 1.5, 0.85));
+  col = mix(col, strokeInk, stroke);
+  col = mix(col, black, abs(stroke - strokeOff) * 0.9);
+  col = mix(col, black, slab);
+
+  // Uneven ink and paper tooth.
+  col *= 0.88 + 0.12 * noise(frag * 0.3);
+  col += (hash(frag + 3.1) - 0.5) * 0.035;
 
   gl_FragColor = vec4(col, 1.0);
 }
